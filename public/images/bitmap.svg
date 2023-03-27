@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="169.67332mm"
+   height="166.75333mm"
+   viewBox="0 0 169.67332 166.75333"
+   version="1.1"
+   id="svg5"
+   inkscape:export-filename="bitmap.svg"
+   inkscape:export-xdpi="91.047058"
+   inkscape:export-ydpi="91.047058"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-20.044558,-64.973745)">
+    <ellipse
+       style="fill:none;stroke:#ffffff;stroke-width:2.065;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path346"
+       cx="105"
+       cy="148.5"
+       rx="79.981277"
+       ry="78.544487"
+       inkscape:export-filename="path346.svg"
+       inkscape:export-xdpi="91.047058"
+       inkscape:export-ydpi="91.047058" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.72606;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path954"
+       cx="105"
+       cy="226.72707"
+       r="5" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.72606;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path954-4"
+       cx="105"
+       cy="69.973747"
+       r="5" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.72606;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path954-2"
+       cx="25.044558"
+       cy="148.5"
+       r="5" />
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.72606;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path954-2-3"
+       cx="184.7179"
+       cy="148.5"
+       r="5" />
+  </g>
+</svg>

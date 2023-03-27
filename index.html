@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <script>
+      /* document.addEventListener('DOMContentLoaded', () => {
+         const main = document.querySelector('#app')
+         setTimeout(() => {
+           console.log(main)
+           main.style.display = 'block'
+         }, 2000)
+       }) */
+    </script>
+    <script defer type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="snap-mandatory snap-y">
+    <main id="app" class="w-full h-auto overflow-hidden snap-mandatory snap-y">
+      <section class="page flex justify-center snap-start">
+        <div class="absolute inset-0 h-screen w-[101%] overflow-x-hidden">
+          <img
+            class="fog parallax-element"
+            data-depth="60"
+            src="/images/fog/fog0.png"
+            alt="fog"
+          />
+          <img
+            class="fog parallax-element"
+            data-depth="30"
+            src="/images/fog/fog1.png"
+            alt="fog"
+          />
+          <img
+            class="fog parallax-element"
+            data-depth="5"
+            src="/images/fog/fog2.png"
+            alt="fog"
+          />
+          <img
+            class="fog parallax-element"
+            data-depth="-50"
+            src="/images/fog/fog2.png"
+            alt="fog"
+          />
+        </div>
+        <div class="bg w-full h-full absolute -z-[1]"></div>
+        <img
+          class="circlesSvg animate-spin-slow opacity-[0.05] w-[100vmax] -top-[25vmax]"
+          src="/images/10.svg"
+          alt=""
+        />
+        <div
+          data-speed="1"
+          id="welcome_big_title"
+          class="z-[80] text-center font-medium mt-[50vh] -translate-y-1/2 flex flex-col justify-center items-center"
+        >
+          <h2
+            class="letter_anim !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-subText"
+          >
+            FULL STACK DEVELOPER
+          </h2>
+          <h1
+            class="letter_anim text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+          >
+            YASSINE GOUMNI
+          </h1>
+        </div>
+        <h2 class="scrollDownText font-neueMetanaNext !text-subText">
+          SCROLL DOWN
+        </h2>
+        <img
+          src="/images/scrollDown.svg"
+          class="scrollDownSvg"
+          width="288"
+          alt="scroll down"
+        />
+      </section>
+      <section class="page snap-start">
+        <h2 data-speed="0.1">ABOUT ME</h2>
+      </section>
+      <nav
+        class="list-none z-[80] absolute bottom-5 left-5 inline-block text-white bg-blend-darken text-base space-y-10 font-thin font-neueMetanaNext"
+      >
+        <li
+          data-index="0"
+          class="mix-blend-overlay cursor-pointer tracking-widest"
+        >
+          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+          Home
+        </li>
+        <li
+          data-index="1"
+          class="mix-blend-overlay cursor-pointer tracking-widest"
+        >
+          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+          About
+        </li>
+        <li
+          data-index="2"
+          class="mix-blend-overlay cursor-pointer tracking-widest"
+        >
+          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+          My Works
+        </li>
+        <li
+          data-index="3"
+          class="mix-blend-overlay cursor-pointer tracking-widest"
+        >
+          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+          Contact
+        </li>
+      </nav>
+    </main>
+  </body>
+</html>
