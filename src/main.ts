@@ -6,6 +6,14 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import initParallax from './utils/parallax'
 import Cursor from './cursor'
 import { LetterFadeInAnimation } from './utils/lettersFadeInAnimation'
+import LocomotiveScroll from 'locomotive-scroll';
+
+window.addEventListener('DOMContentLoaded', () => {
+    const scroll = new LocomotiveScroll({
+        el: document.querySelector<HTMLElement>('[data-scroll-container]')!,
+        smooth: true
+    });
+})
 
 
 gsap.registerPlugin(ScrollToPlugin, Observer, ScrollTrigger)
@@ -154,34 +162,35 @@ tl.to('#welcome_big_title', {
 // }, { passive: false })
 
 //smooth scroll
-Observer.create({
-    target: window,
-    type: "wheel,touch",
-    onChangeY: (self) => {
-        const scrollAmount = self.deltaY * 1; // change the scroll speed as needed
-        const currentScrollPosition = window.scrollY;
-        gsap.to(window, {
-            duration: 1,
-            scrollTo: {
-                y: currentScrollPosition + scrollAmount
-            },
-        })
-    },
-    preventDefault: true
-});
-
+// Observer.create({
+//     target: window,
+//     type: "wheel,touch",
+//     onChangeY: (self) => {
+//         const scrollAmount = self.deltaY * 1.8; // change the scroll speed as needed
+//         const currentScrollPosition = window.scrollY;
+//         gsap.to(window, {
+//             duration: 1,
+//             scrollTo: {
+//                 y: currentScrollPosition + scrollAmount
+//             },
+//         })
+//     },
+//     preventDefault: true
+// });
 
 //parallax scroll effect
-document.querySelectorAll<HTMLElement>('[data-speed]').forEach((elm) => {
-    const speed = elm.getAttribute('data-speed') || '0'
-    gsap.to(elm, {
-        scrollTrigger: {
-            trigger: elm,
-            scrub: 1
-        },
-        y: `+=${100 * +speed}`,
-    })
-})
+// document.querySelectorAll<HTMLElement>('[data-speed]').forEach((elm) => {
+//     const speed = elm.getAttribute('data-speed') || '0'
+//     const lag = elm.getAttribute('data-lag') || '1'
+//     gsap.from(elm, {
+//         scrollTrigger: {
+//             trigger: elm,
+//             scrub: +lag,
+//         },
+//         y: `+=${100 * +speed}`,
+//     })
+// })
+
 
 // render the scene
 function animate() {

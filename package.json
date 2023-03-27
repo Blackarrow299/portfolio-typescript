@@ -28,8 +28,10 @@
         "vite": "^4.2.0"
     },
     "dependencies": {
+        "@types/locomotive-scroll": "^4.1.0",
         "@types/three": "^0.149.0",
         "gsap": "^3.11.5",
+        "locomotive-scroll": "^4.1.4",
         "three": "^0.150.1"
     }
 }

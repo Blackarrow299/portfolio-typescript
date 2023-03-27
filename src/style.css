@@ -43,22 +43,22 @@
 
   body {
     overflow-x: hidden;
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
     font-family: Akshar;
     cursor: none;
     background-color: #1C1C1C;
     color: white;
   }
 
-  body, html {
+  /* body, html {
   scroll-snap-type: proximity;
   scroll-snap-points-y: repeat(100vh);
   scroll-snap-type: y proximity;
-}
+} */
 
-  body::-webkit-scrollbar {
+  /* body::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
   .fog {
     position: absolute;
@@ -133,7 +133,7 @@
   }
 
   .page {
-    @apply w-full h-screen overflow-hidden relative snap-start
+    @apply w-full h-screen relative snap-start
     /* scroll-snap-align: start; */
   }
 
@@ -153,6 +153,8 @@
   .swipe-page:nth-child(3) .bg {
     background-color: white;
   } */
+
+  
 
   .wide-title {
     @apply uppercase text-black tracking-[32px] text-9xl font-thin mb-9
