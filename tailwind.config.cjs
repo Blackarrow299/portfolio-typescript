@@ -11,9 +11,13 @@ module.exports = {
       },
       colors: {
         subText: '#F4A261',
+        background: '#1C1C1C',
       },
       animation: {
         'spin-slow': 'spin 30s linear infinite',
+      },
+      gradientColorStopPositions: {
+        '1%': '1%',
       },
     },
   },
