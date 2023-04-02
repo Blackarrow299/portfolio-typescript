@@ -1,6 +1,6 @@
 import { TextureLoader, Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture } from 'three'
-import isMobileDevice from './utils/isMobileDevice'
-import { lerp } from './utils/utils'
+import isMobileDevice from '../utils/isMobileDevice'
+import { lerp } from '../utils/utils'
 
 export interface Uniforms {
     uOffset: { value: Vector2 }

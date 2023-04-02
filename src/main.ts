@@ -4,21 +4,40 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import Observer from 'gsap/Observer'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import initParallax from './utils/parallax'
-import Cursor from './cursor'
+import Cursor from './modules/cursor'
+import Lenis from '@studio-freight/lenis'
 import { LetterFadeInAnimation } from './utils/lettersFadeInAnimation'
-import LocomotiveScroll from 'locomotive-scroll';
+import Rellax from 'rellax'
+import Fps from './modules/fps'
+// import LocomotiveScroll from 'locomotive-scroll';
 
-window.addEventListener('DOMContentLoaded', () => {
-    const scroll = new LocomotiveScroll({
-        el: document.querySelector<HTMLElement>('[data-scroll-container]')!,
-        smooth: true
-    });
-})
-
+// const locoScroll = new LocomotiveScroll({
+//     el: document.querySelector<HTMLElement>('[data-scroll-container]')!,
+//     smooth: true
+// });
 
 gsap.registerPlugin(ScrollToPlugin, Observer, ScrollTrigger)
+
+const lenis = new Lenis({
+    duration: 2.3
+})
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000)
+})
+
+function raf(time: any) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+}
+
+requestAnimationFrame(raf)
+
 //initialize the parallax effect
-//initParallax()
+initParallax()
+
+const rellax = new Rellax('.rellax');
 
 // create a renderer
 const renderer = new THREE.WebGLRenderer();
@@ -179,18 +198,31 @@ tl.to('#welcome_big_title', {
 // });
 
 //parallax scroll effect
-// document.querySelectorAll<HTMLElement>('[data-speed]').forEach((elm) => {
-//     const speed = elm.getAttribute('data-speed') || '0'
-//     const lag = elm.getAttribute('data-lag') || '1'
+// document.querySelectorAll<HTMLElement>('[data-scroll]').forEach((elm) => {
+//     const speed = elm.getAttribute('data-scroll-speed') || '0'
+//     const lag = elm.getAttribute('data-scroll-delay') || '1'
+//     const direction = elm.getAttribute('data-scroll-direction')
 //     gsap.from(elm, {
 //         scrollTrigger: {
 //             trigger: elm,
 //             scrub: +lag,
 //         },
-//         y: `+=${100 * +speed}`,
+//         [direction === 'horizontal' ? 'x' : 'y']: `+=${100 * +speed}`,
 //     })
 // })
 
+ScrollTrigger.create({
+    trigger: ".welcome-section",
+    start: "bottom 90% ",
+    onEnter: () => {
+        gsap.to("#fog", { opacity: 0, duration: 1 });
+
+    },
+    onLeaveBack: () => {
+        gsap.to("#fog", { opacity: 1, duration: 1, ease: 'Power1.in' });
+
+    }
+});
 
 // render the scene
 function animate() {
@@ -201,3 +233,4 @@ function animate() {
 
 animate();
 
+new Fps()

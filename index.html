@@ -21,59 +21,95 @@
     </script>
     <script defer type="module" src="/src/main.ts"></script>
   </head>
-  <body data-scroll-container class="o-scroll">
-    <main id="app" class="w-full h-auto overflow-hidden snap-mandatory snap-y">
+  <body data-scroll-container class="smooth-scroll">
+    <!-- <img
+      class="circlesSvg animate-spin-slow opacity-[0.05] w-[100vmax] -top-[25vmax]"
+      src="/images/10.svg"
+      alt=""
+    /> -->
+
+    <main id="app" class="w-full h-auto overflow-hidden">
       <section
-        class="page flex justify-center items-center"
+        class="flex justify-center items-center welcome-section"
         data-scroll-section
       >
-        <div class="absolute inset-0 h-screen w-[101%] overflow-x-hidden">
+        <div
+          id="fog"
+          class="absolute inset-0 h-screen w-[101%] overflow-hidden"
+        >
           <img
             class="fog parallax-element"
-            data-depth="60"
-            src="/images/fog/fog0.png"
+            data-depth="-50"
+            src="/images/fog/fog3.png"
             alt="fog"
           />
           <img
             class="fog parallax-element"
-            data-depth="30"
+            data-depth="50"
             src="/images/fog/fog1.png"
             alt="fog"
           />
           <img
             class="fog parallax-element"
-            data-depth="5"
+            data-depth="20"
             src="/images/fog/fog2.png"
             alt="fog"
           />
           <img
             class="fog parallax-element"
-            data-depth="-50"
+            data-depth="-20"
             src="/images/fog/fog2.png"
             alt="fog"
           />
         </div>
+        <nav
+          class="list-none z-[80] absolute bottom-5 left-5 inline-block text-white bg-blend-darken text-base space-y-10 font-thin font-neueMetanaNext"
+        >
+          <li
+            data-index="0"
+            class="mix-blend-overlay cursor-pointer tracking-widest"
+          >
+            <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+            Home
+          </li>
+          <li
+            data-index="1"
+            class="mix-blend-overlay cursor-pointer tracking-widest"
+          >
+            <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+            About
+          </li>
+          <li
+            data-index="2"
+            class="mix-blend-overlay cursor-pointer tracking-widest"
+          >
+            <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+            My Works
+          </li>
+          <li
+            data-index="3"
+            class="mix-blend-overlay cursor-pointer tracking-widest"
+          >
+            <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
+            Contact
+          </li>
+        </nav>
+
         <div class="bg w-full h-full absolute -z-[1]"></div>
-        <img
-          class="circlesSvg animate-spin-slow opacity-[0.05] w-[100vmax] -top-[25vmax]"
-          src="/images/10.svg"
-          alt=""
-        />
+
         <div
           id="welcome_big_title"
           class="z-[80] text-center font-medium flex flex-col justify-center items-center"
         >
           <h2
-            data-scroll
-            data-scroll-speed="0.5"
-            class="letter_anim !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-subText"
+            data-rellax-speed="2"
+            class="rellax letter_anim !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-subText"
           >
             FULL STACK DEVELOPER
           </h2>
           <h1
-            data-scroll
-            data-scroll-speed="2.2"
-            class="letter_anim text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+            data-rellax-speed="2"
+            class="rellax letter_anim text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
           >
             YASSINE GOUMNI
           </h1>
@@ -88,41 +124,9 @@
           alt="scroll down"
         />
       </section>
-      <section class="page">
-        <h2 data-speed="0.1">ABOUT ME</h2>
+      <section class="page" data-scroll-section>
+        <h2 id="test">ABOUT ME</h2>
       </section>
-      <nav
-        class="list-none z-[80] absolute bottom-5 left-5 inline-block text-white bg-blend-darken text-base space-y-10 font-thin font-neueMetanaNext"
-      >
-        <li
-          data-index="0"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
-        >
-          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
-          Home
-        </li>
-        <li
-          data-index="1"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
-        >
-          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
-          About
-        </li>
-        <li
-          data-index="2"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
-        >
-          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
-          My Works
-        </li>
-        <li
-          data-index="3"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
-        >
-          <div class="w-2 h-1 bg-white inline-block mr-3 mb-1 rounded"></div>
-          Contact
-        </li>
-      </nav>
     </main>
   </body>
 </html>

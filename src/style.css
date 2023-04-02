@@ -50,6 +50,21 @@
     color: white;
   }
 
+  html.lenis {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
   /* body, html {
   scroll-snap-type: proximity;
   scroll-snap-points-y: repeat(100vh);
@@ -132,7 +147,7 @@
     bottom: 10%;
   }
 
-  .page {
+  section {
     @apply w-full h-screen relative snap-start
     /* scroll-snap-align: start; */
   }
