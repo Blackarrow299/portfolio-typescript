@@ -46,9 +46,14 @@
         </li>
         <li
           data-index="3"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
+          class="mix-blend-overlay cursor-pointer tracking-widest flex items-center"
         >
           Contact
+          <img
+            src="/icons/arrow-tr.svg"
+            class="ml-1 mb-1"
+            alt="arrow top right"
+          />
         </li>
       </nav>
       <section
@@ -98,29 +103,49 @@
         >
           <h2
             data-rellax-speed="2"
-            class="rellax letter_anim !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-subText"
+            class="rellax !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-subText"
           >
             FULL STACK DEVELOPER
           </h2>
           <h1
             data-rellax-speed="2"
-            class="rellax letter_anim text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+            class="rellax text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
           >
             YASSINE GOUMNI
           </h1>
         </div>
-        <h2 class="scrollDownText font-neueMetanaNext !text-subText">
-          SCROLL DOWN
-        </h2>
-        <img
-          src="/images/scrollDown.svg"
-          class="scrollDownSvg"
-          width="288"
-          alt="scroll down"
-        />
+        <div id="scrollDown">
+          <h2 class="font-neueMetanaNext !text-subText">SCROLL DOWN</h2>
+          <img
+            src="/images/scrollDown.svg"
+            class="mt-2"
+            width="288"
+            alt="scroll down"
+          />
+        </div>
+        <ul
+          class="flex items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
+        >
+          <li class="flex items-center">
+            Github
+            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
+          </li>
+          <li class="flex items-center">
+            Linkedin
+            <img
+              src="/icons/arrow-tr.svg"
+              class="ml-1 mb-1"
+              alt="arrow top right"
+            />
+          </li>
+        </ul>
       </section>
       <section class="page" data-scroll-section>
-        <h2 id="test">ABOUT ME</h2>
+        <h2
+          class="mt-8 ml-6 text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+        >
+          ABOUT ME
+        </h2>
       </section>
     </main>
   </body>

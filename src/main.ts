@@ -44,13 +44,56 @@ const cursor = new Cursor(textureLoader, scene, camera)
 // scene.add(myText)
 
 // // Set properties to configure:
-// myText.text = 'Hello world!'
-// myText.fontSize = 0.2
+// myText.text = 'YASSINE GOUMNI'
+// myText.font = '/fonts/Humane-Bold.ttf'
+// myText.fontSize = 3
+// myText.letterSpacing = 0.15
 // myText.position.z = -2
-// myText.color = 0x9966FF
+// myText.color = 0xFFFFFF
 
 // // Update the rendering:
 // myText.sync()
+
+
+
+// const textMesh = new THREE.Mesh
+
+
+// const vertex = `  
+//     uniform sampler2D uTexture;
+//       varying vec2 vUv;
+
+//       void main(){
+//           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+//       }
+// `
+// const fragment = `
+//       uniform sampler2D uTexture;
+//       uniform float uAlpha;
+//       varying vec2 vUv;
+
+//       void main(){
+//           vec3 color = texture2D(uTexture, vUv).rgb;
+//           gl_FragColor = vec4(color, 1.0);
+
+//       }`
+
+
+// const textMaterial = new THREE.ShaderMaterial({
+//     alphaTest: 0,
+//     uniforms: { uTexture: { value: textureLoader.load('/hero_title.png') } },
+//     vertexShader: vertex,
+//     fragmentShader: fragment
+// })
+
+// const textGeometry = new THREE.PlaneGeometry(7, 1.5, 20, 20)
+
+// textMesh.geometry = textGeometry
+// textMesh.material = textMaterial
+
+// textMesh.position.set(0, 0, 0)
+
+// scene.add(textMesh)
 
 
 //load navigation textures
@@ -104,27 +147,17 @@ welcome_big_title?.addEventListener('mouseleave', () => {
 const titleAnimation = new LetterFadeInAnimation(welcome_big_title?.querySelector('h1'), 0.05)
 const titleAnimation1 = new LetterFadeInAnimation(welcome_big_title?.querySelector('h2'), 0.05)
 
-titleAnimation.fadeIn().then(() => titleAnimation.changeTo("ABOUT ME"))
+titleAnimation.fadeIn()
 titleAnimation1.fadeIn()
-
-const tl = gsap.timeline({ paused: true })
-tl.to('#welcome_big_title', {
-    y: 10,
-    scale: 0.5,
-    duration: 0.5
-}).to('#welcome_big_title', {
-    scale: 1,
-    duration: 0.1
-})
 
 ScrollTrigger.create({
     trigger: ".welcome-section",
     start: "bottom 90% ",
     onEnter: () => {
-        gsap.to("#fog", { opacity: 0, duration: 1 });
+        gsap.to(["#fog", "#scrollDown"], { opacity: 0, duration: 1 });
     },
     onLeaveBack: () => {
-        gsap.to("#fog", { opacity: 1, duration: 1, ease: 'Power1.in' });
+        gsap.to(["#fog", "#scrollDown"], { opacity: 1, duration: 1, ease: 'Power1.in' });
     }
 });
 

@@ -1,6 +1,7 @@
 import { TextureLoader, Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture } from 'three'
 import isMobileDevice from '../utils/isMobileDevice'
 import { lerp } from '../utils/utils'
+import { gsap } from 'gsap'
 
 export interface Uniforms {
     uOffset: { value: Vector2 }
@@ -104,6 +105,22 @@ export default class Cursor {
                 e.movementX * 0.003,
                 -e.movementY * 0.003
             )
+        })
+
+        document.addEventListener('mouseleave', () => {
+            gsap.to(this.mesh.scale, {
+                x: 0,
+                y: 0,
+                duration: 0.2,
+            })
+        })
+
+        document.addEventListener('mouseenter', () => {
+            gsap.to(this.mesh.scale, {
+                x: 1,
+                y: 1,
+                duration: 0.2,
+            })
         })
     }
 
