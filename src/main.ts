@@ -11,6 +11,7 @@ import Fps from './modules/fps'
 import MyScene from './modules/scene'
 //import { Text } from 'troika-three-text'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import Particles from './modules/particles'
 
 const loadingManager = new THREE.LoadingManager()
 
@@ -29,8 +30,8 @@ let head: THREE.Group | undefined
 fbxLoader.load('/head.fbx', (object) => {
     console.log('head load complete');
     const headMaterial = new THREE.MeshLambertMaterial({
-        // color: new THREE.Color("#cccccc"),
-        opacity: 0.2,
+        color: new THREE.Color("#cccccc"),
+        opacity: 1, //old val : 0.2
         transparent: true,
         wireframe: false,
     })
@@ -68,9 +69,19 @@ requestAnimationFrame(raf)
 //initialize the parallax effect
 initParallax()
 
-new Rellax('.rellax');
+// Initialize Rellax.js
+var rellax = new Rellax('.rellax', {
+    speed: -2, // Set the speed property to a negative value
+});
+
+// // Delay the parallax effect for 2 seconds
+// setTimeout(function () {
+//     rellax.refresh(); // Refresh the Rellax.js instance to apply the delay
+// }, 2000);
 
 const { camera, scene, renderer } = new MyScene()
+//const { camera: camera1, renderer: renderer1, scene: scene1 } = new MyScene({ cameraZ: 10 })
+
 const cursor = new Cursor(textureLoader, scene, camera)
 // Set up the lighting
 // var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -78,59 +89,6 @@ const cursor = new Cursor(textureLoader, scene, camera)
 var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(0, 1, 1);
 scene.add(directionalLight);
-// const myText = new Text()
-// scene.add(myText)
-
-// // Set properties to configure:
-// myText.text = 'YASSINE GOUMNI'
-// myText.font = '/fonts/Humane-Bold.ttf'
-// myText.fontSize = 3
-// myText.letterSpacing = 0.15
-// myText.position.z = -2
-// myText.color = 0xFFFFFF
-
-// // Update the rendering:
-// myText.sync()
-
-// const textMesh = new THREE.Mesh
-
-
-// const vertex = `  
-//     uniform sampler2D uTexture;
-//       varying vec2 vUv;
-
-//       void main(){
-//           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-//       }
-// `
-// const fragment = `
-//       uniform sampler2D uTexture;
-//       uniform float uAlpha;
-//       varying vec2 vUv;
-
-//       void main(){
-//           vec3 color = texture2D(uTexture, vUv).rgb;
-//           gl_FragColor = vec4(color, 1.0);
-
-//       }`
-
-
-// const textMaterial = new THREE.ShaderMaterial({
-//     alphaTest: 0,
-//     uniforms: { uTexture: { value: textureLoader.load('/hero_title.png') } },
-//     vertexShader: vertex,
-//     fragmentShader: fragment
-// })
-
-// const textGeometry = new THREE.PlaneGeometry(7, 1.5, 20, 20)
-
-// textMesh.geometry = textGeometry
-// textMesh.material = textMaterial
-
-// textMesh.position.set(0, 0, 0)
-
-// scene.add(textMesh)
-
 
 //load navigation textures
 const navigationTextures: THREE.Texture[] | null = await Promise.all([
@@ -198,7 +156,7 @@ ScrollTrigger.create({
 });
 
 ScrollTrigger.create({
-    trigger: 'body', // Replace with the ID of the trigger element
+    trigger: 'body',
     start: 'top top',
     end: 'bottom bottom',
     onUpdate: function (self) {
@@ -210,15 +168,60 @@ ScrollTrigger.create({
     }
 });
 
-// Create a new clock
-const clock = new THREE.Clock();
+const { particles, particlesMaterial } = new Particles(scene);
+
+ScrollTrigger.create({
+    trigger: '#about',
+    start: 'top top',
+    onEnter: function () {
+        gsap.to(particlesMaterial, {
+            duration: 0.5,
+            opacity: 1,
+            onUpdate: () => {
+                // Update the opacity during the animation
+                particlesMaterial.needsUpdate = true; // Update material to reflect changes
+            },
+        });
+    },
+    onLeaveBack: function () {
+        gsap.to(particlesMaterial, {
+            duration: 0.5,
+            opacity: 0,
+            onUpdate: () => {
+                // Update the opacity during the animation
+                particlesMaterial.needsUpdate = true; // Update material to reflect changes
+            },
+        });
+    }, onUpdate: function () {
+        gsap.to(particles.position, {
+            y: () => {
+                // Get the current scroll position and use it to calculate the target y position
+                const scrollY = window.scrollY;
+                const targetY = scrollY * 0.01; // You can adjust the factor to control the animation speed
+                return targetY;
+            },
+        });
+    }
+});
+
+// //parallax
+// const cursorPosition = new THREE.Vector2(0, 0)
+
+// window.addEventListener('mousemove', (event) => {
+//     cursorPosition.x = event.clientX / window.innerWidth - 0.5
+//     cursorPosition.y = event.clientY / window.innerHeight - 0.5
+// })
 
 // render the scene
 function animate() {
     requestAnimationFrame(animate);
+    //camera.position.x = cursorPosition.x * 0.5
+    //camera.position.y = cursorPosition.y * 0.5
     cursor.animate()
     //head?.rotation.setFromVector3(new THREE.Vector3(0, clock.getElapsedTime() * 0.1, 0), 'XYZ')
+    //renderer1.render(scene1, camera1);
     renderer.render(scene, camera);
+
 }
 
 animate();

@@ -91,9 +91,11 @@ export default class Cursor {
 
         const vec = new Vector3()
         document.addEventListener('mousemove', (e) => {
+            let cursorX = (e.clientX / window.innerWidth) * 2 - 1
+            let cursorY = -(e.clientY / window.innerHeight) * 2 + 1
             vec.set(
-                (e.clientX / window.innerWidth) * 2 - 1,
-                -(e.clientY / window.innerHeight) * 2 + 1,
+                cursorX,
+                cursorY,
                 0.5
             )
             vec.unproject(this.camera)

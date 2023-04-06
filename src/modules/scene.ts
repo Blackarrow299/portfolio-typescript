@@ -5,15 +5,17 @@ export default class MyScene {
     declare scene: Scene
     declare camera: PerspectiveCamera
     declare renderer: WebGLRenderer
+    // declare rendererPostitionTop?: number
+    // declare rendererPositionBottom?: number
 
-    constructor() {
+    constructor(cfg?: { rendererPostitionTop?: string, rendererPositionBottom?: string, rendererPostiton?: string, cameraZ?: number }) {
         // create a renderer
         this.renderer = new WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-        this.renderer.domElement.style.position = "fixed";
-        this.renderer.domElement.style.top = "0px";
-        this.renderer.domElement.style.left = "0px";
+        this.renderer.domElement.style.position = cfg?.rendererPostiton || "fixed";
+        this.renderer.domElement.style.top = `${cfg?.rendererPostitionTop || 0}`;
+        this.renderer.domElement.style.left = `${cfg?.rendererPositionBottom || 0}`;
 
         // set renderer background color to transparent
         this.renderer.setClearColor(0x000000, 0);
@@ -27,7 +29,7 @@ export default class MyScene {
             0.1,
             1000
         );
-        this.camera.position.z = 5;
+        this.camera.position.z = cfg?.cameraZ || 5;
 
         // handle window resize
         const onWindowResize = () => {
