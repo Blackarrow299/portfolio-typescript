@@ -28,10 +28,9 @@ gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 let head: THREE.Group | undefined
 
 fbxLoader.load('/head.fbx', (object) => {
-    console.log('head load complete');
     const headMaterial = new THREE.MeshLambertMaterial({
         color: new THREE.Color("#cccccc"),
-        opacity: 1, //old val : 0.2
+        opacity: 0.2, //old val : 0.2
         transparent: true,
         wireframe: false,
     })
@@ -41,8 +40,8 @@ fbxLoader.load('/head.fbx', (object) => {
             child.material = headMaterial;
         }
     });
-    object.position.set(0, 0, 0)
-    object.scale.set(0.01, 0.01, 0.01);
+    object.position.set(0, 0, -5)
+    object.scale.set(0.02, 0.02, 0.02);
     head = object
     scene.add(head)
 });
@@ -204,7 +203,7 @@ ScrollTrigger.create({
     }
 });
 
-// //parallax
+//parallax
 // const cursorPosition = new THREE.Vector2(0, 0)
 
 // window.addEventListener('mousemove', (event) => {
@@ -215,8 +214,8 @@ ScrollTrigger.create({
 // render the scene
 function animate() {
     requestAnimationFrame(animate);
-    //camera.position.x = cursorPosition.x * 0.5
-    //camera.position.y = cursorPosition.y * 0.5
+    //particles.position.x = - cursorPosition.x * 0.5
+    //particles.position.y = cursorPosition.y * 0.5
     cursor.animate()
     //head?.rotation.setFromVector3(new THREE.Vector3(0, clock.getElapsedTime() * 0.1, 0), 'XYZ')
     //renderer1.render(scene1, camera1);

@@ -31,7 +31,7 @@ export default class Cursor {
         // create a mesh
         this.mesh = new Mesh();
         //cursor postion
-        this.position = new Vector3(0, 0, 0)
+        this.position = new Vector3(0, 0, 1)
         // set the mesh position
         this.mesh.position.set(1, 0, 0)
         //load texture for the cursor

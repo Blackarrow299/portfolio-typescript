@@ -5,7 +5,7 @@ export default class Particles {
     declare particlesMaterial: PointsMaterial
     declare particles: Points
 
-    constructor(scene: Scene, particlesCount: number = 200) {
+    constructor(scene: Scene, particlesCount: number = 400) {
         // Geometry
         const positions = new Float32Array(particlesCount * 3)
 
