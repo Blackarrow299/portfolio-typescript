@@ -11,7 +11,7 @@ export default class Particles {
 
         for (let i = 0; i < particlesCount; i++) {
             positions[i * 3 + 0] = (Math.random() - 0.5) * 20
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 20 * 3
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 20 * 6
             positions[i * 3 + 2] = Math.random() * -10
         }
 

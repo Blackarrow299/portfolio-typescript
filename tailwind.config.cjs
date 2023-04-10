@@ -10,7 +10,7 @@ module.exports = {
         neueMetanaNext: ['NeueMetanaNext', 'sans-serif'],
       },
       colors: {
-        subText: '#F4A261',
+        primary: '#F4A261',
         background: '#1C1C1C',
       },
       animation: {

@@ -163,5 +163,15 @@
   .wide-title {
     @apply uppercase text-black tracking-[32px] text-9xl font-thin mb-9
   }
+
+  #c {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: -1;
+}
  
 }

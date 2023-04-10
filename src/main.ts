@@ -9,9 +9,159 @@ import { LetterFadeInAnimation } from './utils/lettersFadeInAnimation'
 import Rellax from 'rellax'
 import Fps from './modules/fps'
 import MyScene from './modules/scene'
-//import { Text } from 'troika-three-text'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from './modules/particles'
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.domElement.style.position = "absolute";
+renderer.domElement.style.top = '0';
+renderer.domElement.style.left = '0';
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// create a renderer
+const mainRenderer = new THREE.WebGLRenderer();
+mainRenderer.setSize(window.innerWidth, window.innerHeight);
+
+mainRenderer.domElement.style.position = "fixed";
+mainRenderer.domElement.style.top = '0';
+mainRenderer.domElement.style.left = '0';
+
+// set renderer background color to transparent
+mainRenderer.setClearColor(0x000000, 0);
+
+document.body.appendChild(mainRenderer.domElement);
+
+const { camera, scene } = new MyScene()
+// handle window resize
+const onWindowResize = () => {
+    // update camera aspect ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    // update renderer size
+    mainRenderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// listen for window resize event
+window.addEventListener('resize', onWindowResize, false);
+
+const sceneElements: { elm: HTMLElement, fn: Function }[] = [];
+function addScene(elm: HTMLElement, fn: Function) {
+    sceneElements.push({ elm, fn });
+}
+
+function makeScene(elm: HTMLElement) {
+    const scene = new THREE.Scene();
+
+    const fov = 45;
+    const aspect = 2;  // the canvas default
+    const near = 0.1;
+    const far = 5;
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.set(0, 1, 2);
+    camera.lookAt(0, 0, 0);
+    scene.add(camera);
+
+    {
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(-1, 2, 4);
+        camera.add(light);
+    }
+
+    return { scene, camera };
+}
+
+const sceneInitFunctionsByName = {
+    'box': (elem: HTMLElement) => {
+        const { scene, camera } = makeScene(elem);
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshPhongMaterial({ color: 'red' });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        return (rect: any) => {
+            camera.aspect = rect.width / rect.height;
+            camera.updateProjectionMatrix();
+
+            renderer.render(scene, camera);
+        };
+    },
+    'pyramid': (elem: HTMLElement) => {
+        const { scene, camera } = makeScene(elem);
+        const radius = .8;
+        const widthSegments = 4;
+        const heightSegments = 2;
+        const geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
+        const material = new THREE.MeshPhongMaterial({
+            color: 'blue',
+            flatShading: true,
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        return (rect: any) => {
+            camera.aspect = rect.width / rect.height;
+            camera.updateProjectionMatrix();
+            renderer.render(scene, camera);
+        };
+    },
+};
+
+document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
+    // const { scene, camera } = new MyScene({
+    //     fov: 45,
+    //     aspect: 2,
+    //     far: 5,
+    //     near: 0.1
+    // })
+
+    // const color = 0xFFFFFF;
+    // const intensity = 1;
+    // const light = new THREE.DirectionalLight(color, intensity);
+    // light.position.set(-1, 2, 4);
+    // camera.add(light);
+
+    // const geometry = new THREE.BoxGeometry(1, 1, 1);
+    // const material = new THREE.MeshPhongMaterial({ color: 'red' });
+    // const mesh = new THREE.Mesh(geometry, material);
+    // scene.add(mesh);
+
+    // addScene(elm, (rect: any) => {
+    //     camera.aspect = rect.width / rect.height;
+    //     camera.updateProjectionMatrix();
+    //     renderer.render(scene, camera);
+    // })
+
+    // console.log(sceneElements);
+
+    const sceneInitFunction = sceneInitFunctionsByName["box"];
+    const sceneRenderFunction = sceneInitFunction(elem);
+    addScene(elem, sceneRenderFunction);
+
+})
+
+
+function resizeRendererToDisplaySize(renderer: THREE.Renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
+const clearColor = new THREE.Color('#000');
+
+
+
+
+
+
+
+
+
+
 
 const loadingManager = new THREE.LoadingManager()
 
@@ -46,11 +196,9 @@ fbxLoader.load('/head.fbx', (object) => {
     scene.add(head)
 });
 
-
 const lenis = new Lenis({
     duration: 2.3
 })
-
 
 lenis.on('scroll', ScrollTrigger.update)
 
@@ -77,9 +225,6 @@ var rellax = new Rellax('.rellax', {
 // setTimeout(function () {
 //     rellax.refresh(); // Refresh the Rellax.js instance to apply the delay
 // }, 2000);
-
-const { camera, scene, renderer } = new MyScene()
-//const { camera: camera1, renderer: renderer1, scene: scene1 } = new MyScene({ cameraZ: 10 })
 
 const cursor = new Cursor(textureLoader, scene, camera)
 // Set up the lighting
@@ -170,8 +315,11 @@ ScrollTrigger.create({
 const { particles, particlesMaterial } = new Particles(scene);
 
 ScrollTrigger.create({
-    trigger: '#about',
-    start: 'top top',
+    trigger: 'body',
+    start: () => {
+        return `top+=${window.innerHeight - window.innerHeight / 6}px`
+    },
+    end: 'bottom bottom',
     onEnter: function () {
         gsap.to(particlesMaterial, {
             duration: 0.5,
@@ -191,7 +339,8 @@ ScrollTrigger.create({
                 particlesMaterial.needsUpdate = true; // Update material to reflect changes
             },
         });
-    }, onUpdate: function () {
+    },
+    onUpdate: function () {
         gsap.to(particles.position, {
             y: () => {
                 // Get the current scroll position and use it to calculate the target y position
@@ -204,6 +353,7 @@ ScrollTrigger.create({
 });
 
 //parallax
+
 // const cursorPosition = new THREE.Vector2(0, 0)
 
 // window.addEventListener('mousemove', (event) => {
@@ -214,13 +364,42 @@ ScrollTrigger.create({
 // render the scene
 function animate() {
     requestAnimationFrame(animate);
+
+    resizeRendererToDisplaySize(renderer);
+
+    renderer.setScissorTest(false);
+    renderer.setClearColor(clearColor, 0);
+    renderer.clear(true, true);
+    renderer.setScissorTest(true);
+
+    const transform = `translateY(${window.scrollY}px)`;
+    renderer.domElement.style.transform = transform;
+
+    for (const { elm, fn } of sceneElements) {
+        // get the viewport relative position of this element
+        const rect = elm.getBoundingClientRect();
+        const { left, right, top, bottom, width, height } = rect;
+
+        const isOffscreen =
+            bottom < 0 ||
+            top > renderer.domElement.clientHeight ||
+            right < 0 ||
+            left > renderer.domElement.clientWidth;
+
+        if (!isOffscreen) {
+            const positiveYUpBottom = renderer.domElement.clientHeight - bottom;
+            renderer.setScissor(left, positiveYUpBottom, width, height);
+            renderer.setViewport(left, positiveYUpBottom, width, height);
+
+            fn(rect);
+        }
+    }
     //particles.position.x = - cursorPosition.x * 0.5
     //particles.position.y = cursorPosition.y * 0.5
     cursor.animate()
     //head?.rotation.setFromVector3(new THREE.Vector3(0, clock.getElapsedTime() * 0.1, 0), 'XYZ')
     //renderer1.render(scene1, camera1);
-    renderer.render(scene, camera);
-
+    mainRenderer.render(scene, camera);
 }
 
 animate();
