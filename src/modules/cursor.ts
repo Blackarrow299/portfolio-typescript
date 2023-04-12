@@ -2,14 +2,24 @@ import { TextureLoader, Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMate
 import isMobileDevice from '@/utils/isMobileDevice'
 import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
-import { deformationVertex as cursorVertex, cursorFragment } from '@/glsl/index'
+import { deformationVertex as cursorVertex, cursorFragment } from '@/glsl'
+
 export interface Uniforms {
     uOffset: { value: Vector2 }
     uTexture: { value: Texture }
     uAlpha: { value: number }
 }
 
+const CURSOR_TEXTURES_URL = {
+    hi: "/images/cursor/hi.svg",
+    visit: "",
+    default: "/images/cursor/cursor.png",
+}
+
+type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
+
 export default class Cursor {
+
 
     declare private scene: Scene
     declare private textureLoader: TextureLoader
@@ -17,7 +27,8 @@ export default class Cursor {
     declare public mesh: Mesh
     declare public uniforms: Uniforms
     declare public position: Vector3
-    declare public defaultTexture: Texture
+    //declare public defaultTexture: Texture
+    declare cursorTextures: Map<CursorTextures, Texture>
 
     constructor(textureLoader: TextureLoader, scene: Scene, camera: Camera) {
         this.scene = scene
@@ -35,14 +46,20 @@ export default class Cursor {
         // set the mesh position
         this.mesh.position.set(1, 0, 0)
         //load texture for the cursor
-        this.defaultTexture = this.textureLoader.load('/images/cursor/cursor.png')
+
+        this.cursorTextures = new Map()
+        let textureTitle: CursorTextures
+        for (textureTitle in CURSOR_TEXTURES_URL) {
+            if (CURSOR_TEXTURES_URL.hasOwnProperty(textureTitle)) {
+                this.cursorTextures.set(textureTitle, this.textureLoader.load(CURSOR_TEXTURES_URL[textureTitle]));
+            }
+        }
 
         this.uniforms = {
             uOffset: { value: new Vector2(0, 0) },
-            uTexture: { value: this.defaultTexture },
+            uTexture: { value: this.cursorTextures.get('default')! },
             uAlpha: { value: 0.5 },
         }
-
 
         // create a plane geometry
         const cursorMeshGeometry = new PlaneGeometry(0.5, 0.5, 20, 20);
@@ -105,14 +122,14 @@ export default class Cursor {
         )
     }
 
+    public changeTextureByName(textureName: CursorTextures) {
+        if (isMobileDevice()) return
+        this.uniforms.uTexture.value = this.cursorTextures.get(textureName)!
+    }
+
     public changeTexture(texture: Texture) {
         if (isMobileDevice()) return
         this.uniforms.uTexture.value = texture
-    }
-
-    public resetTexture() {
-        if (isMobileDevice()) return
-        this.uniforms.uTexture.value = this.defaultTexture
     }
 
 }

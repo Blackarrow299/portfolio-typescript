@@ -257,18 +257,17 @@ if (navigationTextures && navigations) {
             duration: 0.1,
             ease: Power1.easeOut
         })
-        cursor.resetTexture()
+        cursor.changeTextureByName('default')
     })
 }
 
 // welcome page big title
-const cursorHiTexture = textureLoader.load('/images/cursor/hi.svg')
 const welcome_big_title = document.querySelector<HTMLElement>('#welcome_big_title')
 welcome_big_title?.addEventListener('mousemove', () => {
-    cursor.changeTexture(cursorHiTexture)
+    cursor.changeTextureByName('hi')
 })
 welcome_big_title?.addEventListener('mouseleave', () => {
-    cursor.resetTexture()
+    cursor.changeTextureByName('default')
 })
 
 const titleAnimation = new LetterFadeInAnimation(welcome_big_title?.querySelector('h1'), 0.05)
