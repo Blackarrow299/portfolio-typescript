@@ -11,11 +11,25 @@ import Fps from './modules/fps'
 import MyScene from './modules/scene'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from './modules/particles'
+import { deformationVertex, portfolioNoiseFragment } from './glsl'
+
+const loadingManager = new THREE.LoadingManager()
+
+const fbxLoader = new FBXLoader(loadingManager)
+// create a texture loader
+const textureLoader = new THREE.TextureLoader(loadingManager);
+
+loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+};
+
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.top = '0';
 renderer.domElement.style.left = '0';
+renderer.domElement.style.zIndex = '2'
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -40,6 +54,8 @@ const onWindowResize = () => {
     camera.updateProjectionMatrix();
     // update renderer size
     mainRenderer.setSize(window.innerWidth, window.innerHeight);
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 // listen for window resize event
@@ -50,141 +66,114 @@ function addScene(elm: HTMLElement, fn: Function) {
     sceneElements.push({ elm, fn });
 }
 
-function makeScene(elm: HTMLElement) {
-    const scene = new THREE.Scene();
+const uOffset = { value: new THREE.Vector2(0, 0) }
+document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
 
-    const fov = 45;
-    const aspect = 2;  // the canvas default
-    const near = 0.1;
-    const far = 5;
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.set(0, 1, 2);
-    camera.lookAt(0, 0, 0);
-    scene.add(camera);
+    const test = textureLoader.load('/images/portfolio/portfolio-1.png')
 
-    {
-        const color = 0xFFFFFF;
-        const intensity = 1;
-        const light = new THREE.DirectionalLight(color, intensity);
-        light.position.set(-1, 2, 4);
-        camera.add(light);
+    const uniforms = {
+        uTexture: { value: test },
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+        uDisp: { value: 1.0 },
+        uOffset,
+        uAlpha: { value: 1 }
     }
 
-    return { scene, camera };
-}
+    elem.addEventListener('mousemove', (e) => {
 
-const sceneInitFunctionsByName = {
-    'box': (elem: HTMLElement) => {
-        const { scene, camera } = makeScene(elem);
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshPhongMaterial({ color: 'red' });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-        return (rect: any) => {
-            camera.aspect = rect.width / rect.height;
-            camera.updateProjectionMatrix();
+    })
 
-            renderer.render(scene, camera);
-        };
-    },
-    'pyramid': (elem: HTMLElement) => {
-        const { scene, camera } = makeScene(elem);
-        const radius = .8;
-        const widthSegments = 4;
-        const heightSegments = 2;
-        const geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
-        const material = new THREE.MeshPhongMaterial({
-            color: 'blue',
-            flatShading: true,
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-        return (rect: any) => {
-            camera.aspect = rect.width / rect.height;
-            camera.updateProjectionMatrix();
-            renderer.render(scene, camera);
-        };
-    },
-};
+    elem.addEventListener('mouseenter', () => {
+        gsap.to(uniforms.uDisp, {
+            value: 0.0,
+            duration: 0.5
+        })
+    })
 
-document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
-    // const { scene, camera } = new MyScene({
-    //     fov: 45,
-    //     aspect: 2,
-    //     far: 5,
-    //     near: 0.1
-    // })
+    ScrollTrigger.create({
+        trigger: elem,
+        start: 'top center+=20%',
+        onEnter() {
+            gsap.to(uniforms.uDisp, {
+                value: 0.0,
+                duration: 0.5
+            })
+        }
+    })
 
-    // const color = 0xFFFFFF;
-    // const intensity = 1;
-    // const light = new THREE.DirectionalLight(color, intensity);
-    // light.position.set(-1, 2, 4);
-    // camera.add(light);
+    elem.addEventListener('mouseleave', () => {
+        gsap.to(uniforms.uDisp, {
+            value: 0.0,
+            duration: 0.5
+        })
+    })
+    const { scene, camera } = new MyScene({
+        fov: 45,
+        aspect: 2,
+        far: 5,
+        near: 0.1
+    })
 
-    // const geometry = new THREE.BoxGeometry(1, 1, 1);
-    // const material = new THREE.MeshPhongMaterial({ color: 'red' });
-    // const mesh = new THREE.Mesh(geometry, material);
-    // scene.add(mesh);
+    const geometry = new THREE.PlaneGeometry(0.5, 0.5, 20, 20);
 
-    // addScene(elm, (rect: any) => {
-    //     camera.aspect = rect.width / rect.height;
-    //     camera.updateProjectionMatrix();
-    //     renderer.render(scene, camera);
-    // })
+    const material = new THREE.ShaderMaterial({
+        alphaTest: 0,
+        transparent: true,
+        uniforms: uniforms,
+        fragmentShader: portfolioNoiseFragment,
+        vertexShader: deformationVertex
+    });
 
-    // console.log(sceneElements);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.y = 0.34
+    mesh.scale.set(10, 5.5, 1);
+    //mesh.position.x = 1
+    scene.add(mesh);
 
-    const sceneInitFunction = sceneInitFunctionsByName["box"];
-    const sceneRenderFunction = sceneInitFunction(elem);
-    addScene(elem, sceneRenderFunction);
-
+    addScene(elem, (rect: any) => {
+        camera.aspect = rect.width / rect.height;
+        camera.updateProjectionMatrix();
+        renderer.render(scene, camera);
+    })
 })
 
-
-function resizeRendererToDisplaySize(renderer: THREE.Renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-        renderer.setSize(width, height, false);
+let isScrolling: NodeJS.Timeout;
+window.addEventListener('wheel', function (e) {
+    clearTimeout(isScrolling);
+    // Set a timeout to detect when scrolling stops
+    isScrolling = setTimeout(function () {
+        // Scrolling stopped
+        gsap.to(uOffset.value, {
+            y: 0,
+            duration: 0.5
+        })
+    }, 500);
+    if (e.deltaY > 0) {
+        // Scrolling down
+        gsap.to(uOffset.value, {
+            y: 0.04,
+            duration: 0.5
+        })
+    } else if (e.deltaY < 0) {
+        // Scrolling up
+        gsap.to(uOffset.value, {
+            y: -0.04,
+            duration: 0.5
+        })
     }
-    return needResize;
-}
+});
+
 const clearColor = new THREE.Color('#000');
-
-
-
-
-
-
-
-
-
-
-
-const loadingManager = new THREE.LoadingManager()
-
-const fbxLoader = new FBXLoader(loadingManager)
-// create a texture loader
-const textureLoader = new THREE.TextureLoader(loadingManager);
-
-loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-    console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-};
-
-gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
 let head: THREE.Group | undefined
 
 fbxLoader.load('/head.fbx', (object) => {
     const headMaterial = new THREE.MeshLambertMaterial({
         color: new THREE.Color("#cccccc"),
-        opacity: 0.2, //old val : 0.2
+        opacity: 0.2,
         transparent: true,
         wireframe: false,
     })
-
     object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
             child.material = headMaterial;
@@ -306,7 +295,6 @@ ScrollTrigger.create({
     onUpdate: function (self) {
         // Get the current scroll progress
         var progress = self.progress;
-
         // Rotate the object based on the scroll progress
         head?.rotation.setFromVector3(new THREE.Vector3(0, progress * 0.1 * Math.PI * 2, 0), 'XYZ')
     }
@@ -340,7 +328,7 @@ ScrollTrigger.create({
             },
         });
     },
-    onUpdate: function () {
+    onUpdate: function (self) {
         gsap.to(particles.position, {
             y: () => {
                 // Get the current scroll position and use it to calculate the target y position
@@ -365,7 +353,7 @@ ScrollTrigger.create({
 function animate() {
     requestAnimationFrame(animate);
 
-    resizeRendererToDisplaySize(renderer);
+    //resizeRendererToDisplaySize(renderer);
 
     renderer.setScissorTest(false);
     renderer.setClearColor(clearColor, 0);
@@ -376,6 +364,7 @@ function animate() {
     renderer.domElement.style.transform = transform;
 
     for (const { elm, fn } of sceneElements) {
+
         // get the viewport relative position of this element
         const rect = elm.getBoundingClientRect();
         const { left, right, top, bottom, width, height } = rect;
@@ -390,18 +379,15 @@ function animate() {
             const positiveYUpBottom = renderer.domElement.clientHeight - bottom;
             renderer.setScissor(left, positiveYUpBottom, width, height);
             renderer.setViewport(left, positiveYUpBottom, width, height);
-
             fn(rect);
         }
     }
+
     //particles.position.x = - cursorPosition.x * 0.5
     //particles.position.y = cursorPosition.y * 0.5
     cursor.animate()
     //head?.rotation.setFromVector3(new THREE.Vector3(0, clock.getElapsedTime() * 0.1, 0), 'XYZ')
-    //renderer1.render(scene1, camera1);
     mainRenderer.render(scene, camera);
 }
-
 animate();
-
 new Fps()

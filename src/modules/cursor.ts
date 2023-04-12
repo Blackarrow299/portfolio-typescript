@@ -1,8 +1,8 @@
 import { TextureLoader, Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture } from 'three'
-import isMobileDevice from '../utils/isMobileDevice'
+import isMobileDevice from '@/utils/isMobileDevice'
 import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
-
+import { deformationVertex as cursorVertex, cursorFragment } from '@/glsl/index'
 export interface Uniforms {
     uOffset: { value: Vector2 }
     uTexture: { value: Texture }
@@ -43,36 +43,6 @@ export default class Cursor {
             uAlpha: { value: 0.5 },
         }
 
-        const cursorVertex = `
-      uniform sampler2D uTexture;
-      uniform vec2 uOffset;
-      varying vec2 vUv;
-
-      float M_PI = 3.141529;
-      float test = 10.5;
-
-      vec3 deformationCurve(vec3 position, vec2 uv, vec2 offset){
-          position.x = position.x + sin(uv.y * M_PI) * offset.x;
-          position.y = position.y + sin(uv.x * M_PI) * offset.y;
-          return position;
-      }
-
-      void main(){
-          vUv = uv;
-          vec3 newPosition = deformationCurve(position, uv, uOffset);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-      }
-    `
-        const cursorFragment = `
-      uniform sampler2D uTexture;
-      uniform float uAlpha;
-      varying vec2 vUv;
-
-      void main(){
-          vec3 color = texture2D(uTexture, vUv).rgb;
-          gl_FragColor = texture2D(uTexture, vUv);
-          
-      }`
 
         // create a plane geometry
         const cursorMeshGeometry = new PlaneGeometry(0.5, 0.5, 20, 20);
