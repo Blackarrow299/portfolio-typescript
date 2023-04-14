@@ -3,6 +3,7 @@ import isMobileDevice from '@/utils/isMobileDevice'
 import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
 import { deformationVertex as cursorVertex, cursorFragment } from '@/glsl'
+import { clamp } from 'three/src/math/MathUtils'
 
 export interface Uniforms {
     uOffset: { value: Vector2 }
@@ -10,13 +11,13 @@ export interface Uniforms {
     uAlpha: { value: number }
 }
 
-const CURSOR_TEXTURES_URL = {
-    hi: "/images/cursor/hi.svg",
-    visit: "",
+export const CURSOR_TEXTURES_URL = {
+    hi: "/images/cursor/hi.png",
+    visit: "/images/cursor/visit.svg",
     default: "/images/cursor/cursor.png",
 }
 
-type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
+export type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
 
 export default class Cursor {
 
@@ -66,6 +67,7 @@ export default class Cursor {
         // create a shader material
         const cursorMeshMaterial = new ShaderMaterial({
             alphaTest: 0,
+            transparent: true,
             uniforms: this.uniforms,
             vertexShader: cursorVertex,
             fragmentShader: cursorFragment,
@@ -77,11 +79,15 @@ export default class Cursor {
         this.scene.add(this.mesh)
 
         const vec = new Vector3()
+
+        let cursorX: number = 0
+        let cursorY: number = 0
         document.addEventListener('mousemove', (e) => {
-            let cursorX = (e.clientX / window.innerWidth) * 2 - 1
-            let cursorY = -(e.clientY / window.innerHeight) * 2 + 1
+            cursorX = (e.clientX / window.innerWidth) * 2 - 1
+            cursorY = -(e.clientY / window.innerHeight) * 2 + 1
+
             vec.set(
-                cursorX,
+                lerp(cursorX, (e.clientX / window.innerWidth) * 2 - 1, 1),
                 cursorY,
                 0.5
             )
@@ -91,8 +97,8 @@ export default class Cursor {
             this.position.copy(this.camera.position).add(vec.multiplyScalar(distance))
 
             this.uniforms.uOffset.value.set(
-                e.movementX * 0.003,
-                -e.movementY * 0.003
+                clamp(e.movementX * 0.003, -0.1, 0.1),
+                clamp(-e.movementY * 0.003, -0.1, 0.1)
             )
         })
 

@@ -3,7 +3,7 @@ import gsap, { Power1 } from 'gsap'
 import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import initParallax from './utils/parallax'
-import Cursor from './modules/cursor'
+import Cursor, { CURSOR_TEXTURES_URL } from './modules/cursor'
 import Lenis from '@studio-freight/lenis'
 import { LetterFadeInAnimation } from './utils/lettersFadeInAnimation'
 import Rellax from 'rellax'
@@ -12,16 +12,53 @@ import MyScene from './modules/scene'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from './modules/particles'
 import { deformationVertex, portfolioNoiseFragment } from './glsl'
+import { CursorTextures } from './modules/cursor'
 
+const app = document.querySelector('#app')
+const preloader = document.querySelector('#preloader')
 const loadingManager = new THREE.LoadingManager()
 
 const fbxLoader = new FBXLoader(loadingManager)
 // create a texture loader
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
-loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-    console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-};
+// loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+//     console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+// };
+
+let windowLoaded = false
+let threeLoaded = false
+
+window.addEventListener('load', () => {
+    windowLoaded = true
+})
+
+loadingManager.onLoad = function () {
+    threeLoaded = true
+}
+
+const loadingInterval = setInterval(() => {
+    if (windowLoaded && threeLoaded) {
+        clearInterval(loadingInterval)
+        console.log('loaded');
+
+        setTimeout(() => {
+            gsap.set(preloader, {
+                display: 'none'
+            })
+
+            gsap.set(app, {
+                opacity: 1,
+                overflow: 'initial',
+                height: 'auto'
+            })
+
+            ScrollTrigger.refresh()
+        }, 1000)
+
+
+    }
+}, 100)
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
@@ -31,7 +68,7 @@ renderer.domElement.style.top = '0';
 renderer.domElement.style.left = '0';
 renderer.domElement.style.zIndex = '2'
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+document.body?.appendChild(renderer.domElement);
 
 // create a renderer
 const mainRenderer = new THREE.WebGLRenderer();
@@ -49,6 +86,11 @@ document.body.appendChild(mainRenderer.domElement);
 const { camera, scene } = new MyScene()
 // handle window resize
 const onWindowResize = () => {
+
+    portfolioMeshes.forEach(mesh => {
+        updatePortfolioMeshScale(mesh)
+    });
+
     // update camera aspect ratio
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -67,8 +109,9 @@ function addScene(elm: HTMLElement, fn: Function) {
 }
 
 const uOffset = { value: new THREE.Vector2(0, 0) }
-document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
-
+const portfolioMeshes: THREE.Mesh<THREE.PlaneGeometry, THREE.ShaderMaterial>[] = []
+document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem, index) => {
+    const pH = elem.querySelector('.p-hover')
     const test = textureLoader.load('/images/portfolio/portfolio-1.png')
 
     const uniforms = {
@@ -76,16 +119,34 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
         uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
         uDisp: { value: 1.0 },
         uOffset,
-        uAlpha: { value: 1 }
+        uAlpha: { value: 1 },
+        uOverlay: { value: 0 }
     }
 
-    elem.addEventListener('mousemove', (e) => {
-
-    })
+    // elem.addEventListener('mousemove', () => {
+    //     cursor.changeTextureByName('visit')
+    // })
 
     elem.addEventListener('mouseenter', () => {
-        gsap.to(uniforms.uDisp, {
-            value: 0.0,
+        gsap.to(pH, {
+            opacity: 1,
+            duration: 0.5
+        })
+
+        gsap.to(uniforms.uOverlay, {
+            value: 0.6,
+            duration: 0.8
+        })
+    })
+
+    elem.addEventListener('mouseleave', () => {
+        gsap.to(pH, {
+            opacity: 0,
+            duration: 0.5
+        })
+
+        gsap.to(uniforms.uOverlay, {
+            value: 0,
             duration: 0.5
         })
     })
@@ -93,6 +154,7 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
     ScrollTrigger.create({
         trigger: elem,
         start: 'top center+=20%',
+        end: 'bottom top',
         onEnter() {
             gsap.to(uniforms.uDisp, {
                 value: 0.0,
@@ -101,12 +163,6 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
         }
     })
 
-    elem.addEventListener('mouseleave', () => {
-        gsap.to(uniforms.uDisp, {
-            value: 0.0,
-            duration: 0.5
-        })
-    })
     const { scene, camera } = new MyScene({
         fov: 45,
         aspect: 2,
@@ -126,9 +182,10 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.y = 0.34
-    mesh.scale.set(10, 5.5, 1);
+    updatePortfolioMeshScale(mesh)
     //mesh.position.x = 1
-    scene.add(mesh);
+    portfolioMeshes[index] = mesh
+    scene.add(portfolioMeshes[index]);
 
     addScene(elem, (rect: any) => {
         camera.aspect = rect.width / rect.height;
@@ -136,6 +193,16 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem) => {
         renderer.render(scene, camera);
     })
 })
+
+function updatePortfolioMeshScale(mesh: THREE.Mesh) {
+    if (window.innerWidth < 768) {
+        // For screens with width less than 768 pixels (mobile screens)
+        mesh.scale.set(9, 5.6, 1);
+    } else {
+        // For screens with width greater than or equal to 768 pixels (non-mobile screens)
+        mesh.scale.set(10, 5.6, 1);
+    }
+}
 
 let isScrolling: NodeJS.Timeout;
 window.addEventListener('wheel', function (e) {
@@ -206,7 +273,7 @@ requestAnimationFrame(raf)
 initParallax()
 
 // Initialize Rellax.js
-var rellax = new Rellax('.rellax', {
+new Rellax('.rellax', {
     speed: -2, // Set the speed property to a negative value
 });
 
@@ -225,10 +292,10 @@ scene.add(directionalLight);
 
 //load navigation textures
 const navigationTextures: THREE.Texture[] | null = await Promise.all([
-    textureLoader.loadAsync('/images/navigation/welcome.png'),
-    textureLoader.loadAsync('/images/navigation/about.png'),
-    textureLoader.loadAsync('/images/navigation/myworks.png'),
-    textureLoader.loadAsync('/images/navigation/contact.png')
+    textureLoader.loadAsync('/images/navigation/hero-s.PNG'),
+    textureLoader.loadAsync('/images/navigation/about-s.PNG'),
+    textureLoader.loadAsync('/images/navigation/portfolio-s.PNG'),
+    textureLoader.loadAsync('/images/navigation/contact-s.PNG')
 ]).then((values) => {
     return values
 }).catch(() => {
@@ -259,17 +326,34 @@ if (navigationTextures && navigations) {
         })
         cursor.changeTextureByName('default')
     })
+
+    const sectionsId = [
+        '#hero',
+        '#about',
+        '#portfolio',
+        '#contact'
+    ]
+
+    navigations.addEventListener('click', (e) => {
+        let target = e.target as Element
+        if (target.tagName === 'LI') {
+            const val = target?.getAttribute('data-index') || '0'
+            if (isNaN(+val)) return
+            gsap.to(window, { duration: 2, scrollTo: sectionsId[+target.getAttribute('data-index')!] });
+        }
+    })
 }
 
 // welcome page big title
-const welcome_big_title = document.querySelector<HTMLElement>('#welcome_big_title')
-welcome_big_title?.addEventListener('mousemove', () => {
-    cursor.changeTextureByName('hi')
-})
-welcome_big_title?.addEventListener('mouseleave', () => {
-    cursor.changeTextureByName('default')
+document.querySelectorAll<HTMLElement>('[data-hover]').forEach((elem) => {
+    const data = elem.getAttribute('data-hover')
+    if (typeof data === 'string' && (data as CursorTextures) in CURSOR_TEXTURES_URL) {
+        elem.addEventListener('mousemove', () => cursor.changeTextureByName(data as CursorTextures))
+        elem.addEventListener('mouseleave', () => cursor.changeTextureByName('default'))
+    }
 })
 
+const welcome_big_title = document.querySelector<HTMLElement>('#welcome_big_title')
 const titleAnimation = new LetterFadeInAnimation(welcome_big_title?.querySelector('h1'), 0.05)
 const titleAnimation1 = new LetterFadeInAnimation(welcome_big_title?.querySelector('h2'), 0.05)
 
@@ -288,12 +372,14 @@ ScrollTrigger.create({
 });
 
 ScrollTrigger.create({
-    trigger: 'body',
+    trigger: app,
     start: 'top top',
     end: 'bottom bottom',
     onUpdate: function (self) {
         // Get the current scroll progress
         var progress = self.progress;
+        console.log(progress);
+
         // Rotate the object based on the scroll progress
         head?.rotation.setFromVector3(new THREE.Vector3(0, progress * 0.1 * Math.PI * 2, 0), 'XYZ')
     }
@@ -302,7 +388,7 @@ ScrollTrigger.create({
 const { particles, particlesMaterial } = new Particles(scene);
 
 ScrollTrigger.create({
-    trigger: 'body',
+    trigger: app,
     start: () => {
         return `top+=${window.innerHeight - window.innerHeight / 6}px`
     },
@@ -312,8 +398,7 @@ ScrollTrigger.create({
             duration: 0.5,
             opacity: 1,
             onUpdate: () => {
-                // Update the opacity during the animation
-                particlesMaterial.needsUpdate = true; // Update material to reflect changes
+                particlesMaterial.needsUpdate = true;
             },
         });
     },
@@ -322,12 +407,11 @@ ScrollTrigger.create({
             duration: 0.5,
             opacity: 0,
             onUpdate: () => {
-                // Update the opacity during the animation
-                particlesMaterial.needsUpdate = true; // Update material to reflect changes
+                particlesMaterial.needsUpdate = true;
             },
         });
     },
-    onUpdate: function (self) {
+    onUpdate: function () {
         gsap.to(particles.position, {
             y: () => {
                 // Get the current scroll position and use it to calculate the target y position
@@ -389,4 +473,4 @@ function animate() {
     mainRenderer.render(scene, camera);
 }
 animate();
-new Fps()
+//new Fps()

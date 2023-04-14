@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -8,10 +8,20 @@
     <title>Portfolio</title>
     <script defer type="module" src="/src/main.ts"></script>
   </head>
-  <body class="smooth-scroll">
-    <main id="app" class="w-screen h-auto">
+  <body class="smooth-scroll w-screen">
+    <div
+      id="preloader"
+      class="h-screen w-screen flex justify-center items-center absolute"
+    >
+      <h2 class="text-6xl">LOADING</h2>
+    </div>
+    <main
+      id="app"
+      class="w-screen h-auto"
+      style="opacity: 0; height: 100vh; overflow: hidden; width: 100vw"
+    >
       <nav
-        class="list-none z-[90] fixed top-5 right-5 text-white bg-blend-darken text-base space-x-14 font-thin font-neueMetanaNext flex"
+        class="hidden md:flex list-none z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-base space-x-14 font-thin font-neueMetanaNext"
       >
         <li
           data-index="0"
@@ -29,7 +39,7 @@
           data-index="2"
           class="mix-blend-overlay cursor-pointer tracking-widest"
         >
-          My Works
+          Portfolio
         </li>
         <li
           data-index="3"
@@ -44,6 +54,7 @@
         </li>
       </nav>
       <section
+        id="hero"
         class="w-screen h-screen relative flex justify-center items-center welcome-section overflow-hidden"
       >
         <div
@@ -85,17 +96,18 @@
         ></div>
         <div
           id="welcome_big_title"
-          class="z-[80] text-center font-medium flex flex-col justify-center items-center"
+          class="rellax z-[80] text-center font-medium flex flex-col justify-center items-center"
+          data-hover="hi"
+          data-rellax-speed="7"
+          data-rellax-percentage="0.5"
         >
           <h2
-            data-rellax-speed="2"
-            class="rellax !leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-primary"
+            class="!leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-primary"
           >
             FULL STACK DEVELOPER
           </h2>
           <h1
-            data-rellax-speed="2"
-            class="rellax text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+            class="text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
           >
             YASSINE GOUMNI
           </h1>
@@ -110,32 +122,38 @@
             alt="scroll down"
           />
         </div>
-        <ul
+        <div
           id="h-socials"
-          class="flex items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
+          class="z-40 flex items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
         >
-          <li class="flex items-center">
+          <a class="flex items-center" href="/" data-hover="visit">
             Github
             <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
-          </li>
-          <li class="flex items-center">
+          </a>
+          <a class="flex items-center" href="/" data-hover="visit">
             Linkedin
             <img
               src="/icons/arrow-tr.svg"
               class="ml-1 mb-1"
               alt="arrow top right"
             />
-          </li>
-        </ul>
+          </a>
+        </div>
       </section>
-      <section id="about" class="relative z-[80] w-full py-64 flex flex-wrap">
+      <section
+        id="about"
+        class="relative z-[80] w-full py-64 flex flex-wrap px-8 md:px-0"
+      >
         <h2
-          class="ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
+          data-title
+          class="md:ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
         >
           ABOUT <br />
           <span class="text-primary">ME</span>
         </h2>
-        <p class="font-neueMetanaNext w-96 ml-auto mr-[7%]">
+        <p
+          class="font-neueMetanaNext w-96 ml-auto mr-[7%] text-sm md:text-base"
+        >
           My name is yassine goumni ,im full stack developer who loves what he
           does, motivation has never been a problem always trying to learn and
           make new things, I learned to code from an early age in various
@@ -143,13 +161,17 @@
           effective in learning and resolving problems
         </p>
       </section>
-      <section class="relative z-[80] w-full py-64 flex flex-wrap">
+      <section
+        id="skills"
+        class="relative z-[80] w-full py-64 flex flex-wrap px-8 md:px-0"
+      >
         <h2
-          class="ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
+          data-title
+          class="md:ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
         >
           SKI<span class="text-primary">LL</span>S <br />
         </h2>
-        <div class="w-96 ml-auto mr-[7%] font-neueMetanaNext">
+        <div class="w-96 sm:ml-auto md:mr-[7%] font-neueMetanaNext">
           <h4 class="text-primary">Full stack development</h4>
           <div class="space-x-2 space-y-2 text-sm">
             <div
@@ -199,69 +221,47 @@
         </div>
       </section>
       <section
-        class="h-fit items-start relative z-[1] w-full pb-64 flex flex-wrap"
+        id="portfolio"
+        class="h-fit items-start relative z-[80] pb-64 flex flex-wrap px-8 sm:px-16 lg:px-0 w-screen"
       >
         <div
-          class="pt-64 md:self-start md:sticky top-0 ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
+          class="pt-64 self-start lg:sticky top-0 lg:ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
         >
-          <h2>
+          <h2 data-title>
             MY<br />
             <span class="text-primary">PORTFOLIO</span>
           </h2>
         </div>
         <div
-          class="md:pt-[45rem] w-[40rem] font-neueMetanaNext ml-auto mr-[7%] space-y-96"
+          class="pt-16 lg:pt-[45rem] w-full lg:w-[40rem] font-neueMetanaNext lg:ml-auto lg:mr-[7%] space-y-24 md:space-y-96"
         >
-          <div class="portfolio -z-10">
+          <div class="portfolio cursor-pointer">
             <ul
-              class="flex justify-end list-none font-neueMetanaNext text-gray-400 space-x-4 text-xs mb-5"
+              class="flex justify-end list-none font-neueMetanaNext text-gray-400 space-x-4 text-[0.6rem] sm:text-xs mb-5"
             >
               <li>Typescript</li>
               <li>ReactJS</li>
               <li>NextJS</li>
             </ul>
             <div class="w-full relative">
-              <img
-                class="w-full object-cover opacity-0"
-                src="/images/portfolio/portfolio-1.png"
-                alt=""
-              />
+              <div
+                class="opacity-0 p-hover w-full h-[360px] md:w-[640px] translate-y-1"
+              >
+                <span
+                  class="text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-white rounded-full absolute font-humane font-bold text-4xl md:text-6xl flex justify-center items-center tracking-wide"
+                  >ENTER</span
+                >
+              </div>
             </div>
-
             <div class="mt-8 w-full">
-              <h5 class="text-primary font-neueMetanaNext text-sm mb-1">
+              <h5
+                class="text-primary font-neueMetanaNext text-xs md:text-sm mb-1"
+              >
                 Personal project
               </h5>
-              <h2 class="font-humane tracking-wider text-7xl font-bold">
-                <span class="text-primary">01.</span> ARROW MEETING
-              </h2>
-              <!-- <h2 class="text-lg -tracking-widest">
-              <span class="text-primary">01. </span>
-              Web App for Video/Audio Calls, Screen Sharing, and Chat
-            </h2> -->
-            </div>
-          </div>
-          <div class="portfolio">
-            <ul
-              class="flex justify-end list-none font-neueMetanaNext text-gray-400 space-x-4 text-xs mb-5"
-            >
-              <li>Typescript</li>
-              <li>ReactJS</li>
-              <li>NextJS</li>
-            </ul>
-            <div class="w-full relative">
-              <img
-                class="w-full object-cover opacity-0"
-                src="/images/portfolio/portfolio-1.png"
-                alt=""
-              />
-            </div>
-
-            <div class="mt-8 w-full">
-              <h5 class="text-primary font-neueMetanaNext text-sm mb-1">
-                Personal project
-              </h5>
-              <h2 class="font-humane tracking-wider text-7xl font-bold">
+              <h2
+                class="font-humane tracking-wider text-5xl md:text-7xl font-bold"
+              >
                 <span class="text-primary">01.</span> ARROW MEETING
               </h2>
               <!-- <h2 class="text-lg -tracking-widest">
@@ -273,13 +273,21 @@
         </div>
       </section>
       <section
-        class="mt-64 relative z-[80] w-full h-screen tracking-wider flex justify-center items-center"
+        id="contact"
+        class="mt-64 relative z-[80] w-full h-screen tracking-wider flex justify-center items-center px-8 md:px-0"
       >
-        <div class="text-center flex items-center justify-center flex-col">
-          <h2 class="text-9xl font-humane font-bold uppercase lg:text-[15rem]">
+        <div
+          class="text-center flex items-center justify-center flex-col rellax"
+          data-rellax-speed="7"
+          data-rellax-percentage="0.5"
+        >
+          <h2
+            data-title
+            class="text-9xl font-humane font-bold uppercase lg:text-[15rem]"
+          >
             <span class="text-primary">Get</span> In Touch
           </h2>
-          <p class="font-neueMetanaNext w-96">
+          <p class="font-neueMetanaNext w-full md:w-96">
             Have a Query? Feel Free to Contact Me for Questions, Collaborations,
             or Inquiries ,or just to say hi
           </p>

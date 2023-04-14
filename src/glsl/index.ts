@@ -32,6 +32,7 @@ uniform sampler2D uTexture; // Texture input
 uniform vec2 uResolution; // Resolution of the canvas
 uniform float uDisp; // displacement amount
 uniform float uAlpha;
+uniform float uOverlay;
 varying vec2 vUv;
 
 float random (in vec2 st) {
@@ -61,7 +62,8 @@ void main() {
     uv += n * uDisp; // Adjust the displacement strength
 
     vec4 textureColor = texture2D(uTexture, uv);
-    gl_FragColor = vec4(textureColor.xyz, uAlpha);
+    
+    gl_FragColor = mix(vec4(textureColor.xyz, uAlpha), vec4(0.0,0.0,0.0,1.0), uOverlay);
 }
 `
 
