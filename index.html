@@ -8,7 +8,7 @@
     <title>Portfolio</title>
     <script defer type="module" src="/src/main.ts"></script>
   </head>
-  <body class="smooth-scroll w-screen">
+  <body class="smooth-scroll w-screen font-neueMetanaNext">
     <div
       id="preloader"
       class="h-screen w-screen flex justify-center items-center absolute z-[9999] bg-background"
@@ -20,6 +20,61 @@
       class="w-screen h-auto"
       style="opacity: 0; height: 100vh; overflow: hidden; width: 100vw"
     >
+      <!-- mobile nav -->
+      <nav
+        id="m-nav"
+        class="hidden fixed top-0 w-full h-screen bg-white z-[9999] text-black grid-col-1 grid-rows-[100px_minmax(0,_1fr)_100px] px-4"
+      >
+        <div class="flex justify-end items-center w-full" id="m-nav-close">
+          <svg
+            width="64px"
+            height="64px"
+            stroke-width="1.3"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            color="#000000"
+            data-darkreader-inline-color=""
+            style="--darkreader-inline-color: #e8e6e3"
+          >
+            <path
+              d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"
+              stroke="#000000"
+              stroke-width="1.3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-darkreader-inline-stroke=""
+              style="--darkreader-inline-stroke: #000000"
+            ></path>
+          </svg>
+        </div>
+        <ul class="text-4xl space-y-2 flex justify-center flex-col w-full">
+          <li>Home</li>
+          <li>About</li>
+          <li>Portfolio</li>
+          <li>Contact</li>
+        </ul>
+        <div
+          class="border-t border-black flex justify-between items-center text-sm font-bold"
+        >
+          <a class="flex items-center" href="/" data-hover="visit">
+            Github
+            <img
+              src="/icons/github-black.svg"
+              class="ml-1 mb-1 w-4"
+              alt="github"
+            />
+          </a>
+          <a class="flex items-center" href="/" data-hover="visit">
+            Linkedin
+            <img
+              src="/icons/arrow-tr-black.svg"
+              class="ml-1 mb-1 w-4"
+              alt="arrow top right"
+            />
+          </a>
+        </div>
+      </nav>
       <nav
         class="hidden md:flex list-none z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-base space-x-14 font-thin font-neueMetanaNext"
       >
@@ -51,6 +106,17 @@
             class="ml-1 mb-1"
             alt="arrow top right"
           />
+        </li>
+      </nav>
+      <nav
+        class="flex md:hidden list-none z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-sm space-x-14 font-thin font-neueMetanaNext"
+      >
+        <li
+          id="m-nav-open"
+          class="mix-blend-overlay cursor-pointer tracking-widest flex items-center"
+        >
+          Menu
+          <img src="/icons/menu.svg" class="ml-1 mb-1" alt="arrow top right" />
         </li>
       </nav>
       <section

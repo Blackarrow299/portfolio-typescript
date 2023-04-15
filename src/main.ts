@@ -190,9 +190,6 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem, index) => {
     })
 })
 
-// 10 for 1920
-//8.2 for 414
-
 function updatePortfolioMeshScale(mesh: THREE.Mesh) {
     if (window.innerWidth < 768 && window.innerWidth > 376) {
         // For screens with width less than 768 pixels (mobile screens)
@@ -202,7 +199,7 @@ function updatePortfolioMeshScale(mesh: THREE.Mesh) {
         mesh.scale.set(7.5, 5.6, 1)
     } else {
         // For screens with width greater than or equal to 768 pixels (non-mobile screens)
-        mesh.scale.set(window.innerWidth / 192, 5.6, 1);
+        mesh.scale.set(10, 5.6, 1);
     }
 }
 
@@ -423,8 +420,46 @@ ScrollTrigger.create({
     }
 });
 
-//parallax
 
+//mobile navigation
+const mNav = document.querySelector<HTMLElement>('#m-nav')
+const mNavOpen = document.querySelector<HTMLElement>('#m-nav-open')
+const mNavClose = document.querySelector<HTMLElement>('#m-nav-close')
+
+mNavOpen?.addEventListener('click', () => {
+    gsap.set('body', {
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden'
+    })
+
+    gsap.set(mNav, {
+        display: 'grid'
+    })
+
+    gsap.to(mNav, {
+        opacity: 1
+    })
+})
+
+mNavClose?.addEventListener('click', () => {
+    gsap.set('body', {
+        opacity: 1,
+        overflow: 'initial',
+        height: 'auto'
+    })
+
+    gsap.to(mNav, {
+        opacity: 0,
+        onComplete() {
+            gsap.set(mNav, {
+                display: 'none'
+            })
+        }
+    })
+})
+
+//parallax
 // const cursorPosition = new THREE.Vector2(0, 0)
 
 // window.addEventListener('mousemove', (event) => {
