@@ -11,7 +11,7 @@
   <body class="smooth-scroll w-screen">
     <div
       id="preloader"
-      class="h-screen w-screen flex justify-center items-center absolute"
+      class="h-screen w-screen flex justify-center items-center absolute z-[9999] bg-background"
     >
       <h2 class="text-6xl">LOADING</h2>
     </div>
@@ -102,29 +102,32 @@
           data-rellax-percentage="0.5"
         >
           <h2
-            class="!leading-[0.8rem] font-bold font-neueMetanaNext text-xl lg:text-2xl lg:tracking-[16px] !text-primary"
+            class="!leading-[0.8rem] font-bold font-neueMetanaNext text-lg lg:text-2xl lg:tracking-[16px] !text-primary"
           >
             FULL STACK DEVELOPER
           </h2>
           <h1
-            class="text-white text-9xl lg:text-[15rem] font-humane font-bold tracking-widest"
+            class="text-white text-8xl lg:text-[15rem] font-humane font-bold tracking-widest"
           >
             YASSINE GOUMNI
           </h1>
         </div>
 
         <div id="scrollDown">
-          <h2 class="font-neueMetanaNext !text-primary">SCROLL DOWN</h2>
+          <h2
+            class="font-neueMetanaNext !text-primary text-sm md:text-base tracking-[10px]"
+          >
+            SCROLL DOWN
+          </h2>
           <img
             src="/images/scrollDown.svg"
-            class="mt-2"
-            width="288"
+            class="mt-2 w-[288px]"
             alt="scroll down"
           />
         </div>
         <div
           id="h-socials"
-          class="z-40 flex items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
+          class="md:flex hidden z-40 items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
         >
           <a class="flex items-center" href="/" data-hover="visit">
             Github
@@ -142,7 +145,7 @@
       </section>
       <section
         id="about"
-        class="relative z-[80] w-full py-64 flex flex-wrap px-8 md:px-0"
+        class="relative z-[80] w-full py-52 md:py-64 flex flex-wrap px-8 md:px-0"
       >
         <h2
           data-title
@@ -245,7 +248,7 @@
             </ul>
             <div class="w-full relative">
               <div
-                class="opacity-0 p-hover w-full h-[360px] md:w-[640px] translate-y-1"
+                class="opacity-0 p-hover w-full h-[220px] md:h-[360px] md:w-[640px] translate-y-1"
               >
                 <span
                   class="text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-white rounded-full absolute font-humane font-bold text-4xl md:text-6xl flex justify-center items-center tracking-wide"
@@ -274,7 +277,7 @@
       </section>
       <section
         id="contact"
-        class="mt-64 relative z-[80] w-full h-screen tracking-wider flex justify-center items-center px-8 md:px-0"
+        class="mt-64 relative z-[80] w-screen overflow-hidden h-screen tracking-wider flex justify-center items-center px-8 md:px-0"
       >
         <div
           class="text-center flex items-center justify-center flex-col rellax"

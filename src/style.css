@@ -125,10 +125,6 @@
     position: absolute;
     bottom: 1%;
     z-index: 4;
-    font-weight: 500;
-    font-size: 16px;
-    color: #C2C2C2;
-    letter-spacing: 10px;
     text-align: center;
   }
 

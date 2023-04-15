@@ -40,8 +40,6 @@ loadingManager.onLoad = function () {
 const loadingInterval = setInterval(() => {
     if (windowLoaded && threeLoaded) {
         clearInterval(loadingInterval)
-        console.log('loaded');
-
         setTimeout(() => {
             gsap.set(preloader, {
                 display: 'none'
@@ -55,8 +53,6 @@ const loadingInterval = setInterval(() => {
 
             ScrollTrigger.refresh()
         }, 1000)
-
-
     }
 }, 100)
 
@@ -134,7 +130,7 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem, index) => {
         })
 
         gsap.to(uniforms.uOverlay, {
-            value: 0.6,
+            value: 0.8,
             duration: 0.8
         })
     })
@@ -194,13 +190,19 @@ document.querySelectorAll<HTMLElement>('.portfolio').forEach((elem, index) => {
     })
 })
 
+// 10 for 1920
+//8.2 for 414
+
 function updatePortfolioMeshScale(mesh: THREE.Mesh) {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 && window.innerWidth > 376) {
         // For screens with width less than 768 pixels (mobile screens)
-        mesh.scale.set(9, 5.6, 1);
+        mesh.scale.set(8.2, 5.6, 1)
+    }
+    else if (window.innerWidth < 376) {
+        mesh.scale.set(7.5, 5.6, 1)
     } else {
         // For screens with width greater than or equal to 768 pixels (non-mobile screens)
-        mesh.scale.set(10, 5.6, 1);
+        mesh.scale.set(window.innerWidth / 192, 5.6, 1);
     }
 }
 
@@ -378,8 +380,6 @@ ScrollTrigger.create({
     onUpdate: function (self) {
         // Get the current scroll progress
         var progress = self.progress;
-        console.log(progress);
-
         // Rotate the object based on the scroll progress
         head?.rotation.setFromVector3(new THREE.Vector3(0, progress * 0.1 * Math.PI * 2, 0), 'XYZ')
     }
