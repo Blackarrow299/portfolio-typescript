@@ -25,7 +25,10 @@
         id="m-nav"
         class="hidden fixed top-0 w-full h-screen bg-white z-[9999] text-black grid-col-1 grid-rows-[100px_minmax(0,_1fr)_100px] px-4"
       >
-        <div class="flex justify-end items-center w-full" id="m-nav-close">
+        <div
+          class="cursor-pointer flex justify-end items-center w-full"
+          id="m-nav-close"
+        >
           <svg
             width="64px"
             height="64px"
@@ -49,12 +52,13 @@
           </svg>
         </div>
         <ul class="text-4xl space-y-2 flex justify-center flex-col w-full">
-          <li>Home</li>
-          <li>About</li>
-          <li>Portfolio</li>
-          <li>Contact</li>
+          <li class="overflow-y-hidden"><a class="block">Home</a></li>
+          <li class="overflow-y-hidden"><a class="block">About</a></li>
+          <li class="overflow-y-hidden"><a class="block">Portfolio</a></li>
+          <li class="overflow-y-hidden"><a class="block">Contact</a></li>
         </ul>
         <div
+          id="m-nav-socials"
           class="border-t border-black flex justify-between items-center text-sm font-bold"
         >
           <a class="flex items-center" href="/" data-hover="visit">

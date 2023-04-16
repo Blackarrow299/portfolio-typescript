@@ -425,6 +425,18 @@ ScrollTrigger.create({
 const mNav = document.querySelector<HTMLElement>('#m-nav')
 const mNavOpen = document.querySelector<HTMLElement>('#m-nav-open')
 const mNavClose = document.querySelector<HTMLElement>('#m-nav-close')
+const mNavSocials = document.querySelector<HTMLElement>('#m-nav-socials')
+gsap.set("#m-nav ul li a", {
+    y: 100,
+})
+
+gsap.set(mNavSocials, {
+    y: 100,
+})
+
+gsap.set(mNavClose, {
+    y: -100,
+})
 
 mNavOpen?.addEventListener('click', () => {
     gsap.set('body', {
@@ -438,7 +450,19 @@ mNavOpen?.addEventListener('click', () => {
     })
 
     gsap.to(mNav, {
-        opacity: 1
+        opacity: 1,
+        onComplete() {
+            gsap.to("#m-nav ul li a", {
+                y: 0,
+                stagger: 0.1,
+                duration: 0.2
+            })
+
+            gsap.to([mNavSocials, mNavClose], {
+                y: 0,
+                duration: 0.2
+            })
+        }
     })
 })
 
@@ -454,6 +478,18 @@ mNavClose?.addEventListener('click', () => {
         onComplete() {
             gsap.set(mNav, {
                 display: 'none'
+            })
+
+            gsap.set("#m-nav ul li a", {
+                y: 100,
+            })
+
+            gsap.set(mNavSocials, {
+                y: 100,
+            })
+
+            gsap.set(mNavClose, {
+                y: -100,
             })
         }
     })
