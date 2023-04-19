@@ -10,3 +10,26 @@ export function shuffleArray<T>(array: T[]): T[] {
     }
     return array;
 }
+
+export function splitText(target: HTMLElement | undefined | null): HTMLSpanElement[] {
+    if (!target) return []
+
+    const content = target.innerText || '';
+    target.textContent = '';
+
+    return Array.from(content).map((letter) => {
+        const span = document.createElement('span');
+        span.textContent = letter;
+        span.style.display = 'inline-block'
+        target?.append(span);
+        return span
+    }) || [];
+}
+
+export function getViewSize(camera: THREE.PerspectiveCamera) {
+    const fovInRadians = (camera.fov * Math.PI) / 180;
+    const height = Math.abs(
+        camera.position.z * Math.tan(fovInRadians / 2) * 2
+    );
+    return { width: height * camera.aspect, height };
+}

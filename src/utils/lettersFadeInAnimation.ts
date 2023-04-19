@@ -1,4 +1,4 @@
-import { shuffleArray } from "./utils";
+import { shuffleArray, splitText } from "./utils";
 
 export class LetterFadeInAnimation {
     private target: HTMLElement | undefined | null;
@@ -14,19 +14,14 @@ export class LetterFadeInAnimation {
 
     public init(): void {
         if (!this.target) return
+        const split = splitText(this.target)
+        if (!split) return
+        split?.forEach((letter) => {
+            letter.style.opacity = '0';
+            letter.style.transition = `opacity ${this.transition}s ease-out`;
+        })
 
-        const content = this.target.innerText || '';
-        this.target.textContent = '';
-
-        Array.from(content).forEach((letter) => {
-            const span = document.createElement('span');
-            span.textContent = letter;
-            this.target?.append(span);
-            span.style.opacity = '0';
-            span.style.transition = `opacity ${this.transition}s ease-out`;
-        });
-
-        this.spans = shuffleArray(Array.from(this.target.children) as Array<HTMLSpanElement>);
+        this.spans = shuffleArray(split);
         this.spans.forEach((span, i) => {
             span.style.transitionDelay = `${i * this.speed}s`;
         });

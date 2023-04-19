@@ -17,7 +17,7 @@ export const deformationVertex = `
           gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
       }
     `
-export const cursorFragment = `
+export const defaultFragment = `
       uniform sampler2D uTexture;
       uniform float uAlpha;
       varying vec2 vUv;
