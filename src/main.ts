@@ -64,7 +64,7 @@ const mainScene = new MainScene(fbxLoader)
 const portfolioScene = new PortfolioScene(textureLoader, scroll)
 const particles = new Particles(mainScene.scene);
 const mobileNavigation = new MobileNavigation(scroll)
-const slider = new Slider(PORTFOLIO_IMAGES[0], textureLoader)
+// const slider = new Slider(PORTFOLIO_IMAGES[0], textureLoader)
 const parallax = new Parallax('.parallax-element')
 const cursor = new Cursor(textureLoader, mainScene.scene, mainScene.camera)
 
@@ -93,7 +93,7 @@ function animate() {
     requestAnimationFrame(animate);
     portfolioScene.animate()
     particles.animate()
-    slider.render()
+    // slider.render()
     cursor.animate()
     mainScene.animate()
 }

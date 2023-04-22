@@ -15,6 +15,9 @@ module.exports = {
       },
       animation: {
         'spin-slow': 'spin 30s linear infinite',
+        'spin-3': 'spin 3s linear infinite',
+        'spin-10': 'spin 10s linear infinite',
+        'spin-20': 'spin 20s linear infinite',
       },
       gradientColorStopPositions: {
         '1%': '1%',

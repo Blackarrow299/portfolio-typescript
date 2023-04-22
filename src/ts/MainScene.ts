@@ -8,8 +8,9 @@ export default class MainScene {
     declare public camera: PerspectiveCamera
     declare head: THREE.Group
     declare fbxLoader: FBXLoader
-
+    declare isRendering
     constructor(fbxLoader: FBXLoader) {
+        this.isRendering = true
         this.fbxLoader = fbxLoader
         // create a renderer
         this.renderer = new WebGLRenderer();
@@ -67,8 +68,13 @@ export default class MainScene {
             }
         });
 
-        // listen for window resize event
+        this.bindEvents()
+    }
+
+    bindEvents() {
         window.addEventListener('resize', this.onResize.bind(this), false);
+        document.addEventListener('MainScene:Stop', () => this.isRendering = false)
+        document.addEventListener('MainScene:Start', () => this.isRendering = true)
     }
 
     // handle window resize
@@ -89,8 +95,10 @@ export default class MainScene {
         this.scene.add(directionalLight);
     }
 
+
     animate() {
         //requestAnimationFrame(this.animate.bind(this))
+        if (!this.isRendering) return
         this.renderer.render(this.scene, this.camera);
     }
 }

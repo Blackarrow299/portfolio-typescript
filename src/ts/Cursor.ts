@@ -17,7 +17,6 @@ export const CURSOR_TEXTURES_URL = {
     default: "/images/cursor/cursor.png",
 }
 
-
 export type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
 
 export default class Cursor {

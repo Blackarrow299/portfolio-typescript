@@ -33,3 +33,19 @@ export function getViewSize(camera: THREE.PerspectiveCamera) {
     );
     return { width: height * camera.aspect, height };
 }
+
+export const event = (eventName: string) => {
+    let e: Event
+
+    if (!window.events) window['events'] = {}
+
+    if (eventName in window.events) {
+        e = window.events[eventName]
+    } else {
+        e = new Event(eventName)
+        window.events[eventName] = e
+    }
+    console.log(e);
+
+    document.dispatchEvent(e)
+}
