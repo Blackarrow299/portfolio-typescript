@@ -4,6 +4,7 @@ export declare global {
         app: HTMLElement;
         events: {
             [key: string]: Event
-        }
+        },
+        textureLoader: THREE.TextureLoader,
     }
 }

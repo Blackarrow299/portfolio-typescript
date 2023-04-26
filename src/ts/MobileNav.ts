@@ -1,12 +1,10 @@
 import { gsap } from "gsap"
 import { PAGE_SECTIONS } from "../utils/constants"
-import Scroll from "./Scroll"
+import { event } from "@/utils/utils"
 
 export default class MobileNavigation {
     declare private $el
-    declare private scroll: Scroll
-    constructor(scroll: Scroll) {
-        this.scroll = scroll
+    constructor() {
         this.$el = {
             mNav: document.querySelector<HTMLElement>('#m-nav'),
             mNavOpen: document.querySelector<HTMLElement>('#m-nav-open'),
@@ -36,7 +34,7 @@ export default class MobileNavigation {
     }
 
     onOpen() {
-        this.scroll.lock()
+        event('Scroll:Lock')
 
         gsap.set(this.$el.mNav, {
             display: 'grid'
@@ -59,7 +57,7 @@ export default class MobileNavigation {
     }
 
     onClose() {
-        this.scroll.unlock()
+        event('Scroll:Unlock')
 
         gsap.to(this.$el.mNav, {
             opacity: 0,

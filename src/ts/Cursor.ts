@@ -1,4 +1,4 @@
-import { TextureLoader, Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture, IUniform } from 'three'
+import { Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture, IUniform } from 'three'
 import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
 import { deformationVertex as cursorVertex, defaultFragment } from '@/glsl'
@@ -21,7 +21,6 @@ export type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
 
 export default class Cursor {
     declare private scene: Scene
-    declare private textureLoader: TextureLoader
     declare private camera: Camera
     declare public mesh: Mesh
     declare public uniforms: Uniform
@@ -36,10 +35,9 @@ export default class Cursor {
     declare navigationTextures: THREE.Texture[]
 
 
-    constructor(textureLoader: TextureLoader, scene: Scene, camera: Camera) {
+    constructor(scene: Scene, camera: Camera) {
         if (window.isMobile) return
         this.scene = scene
-        this.textureLoader = textureLoader
         this.camera = camera
 
         // create a mesh
@@ -54,16 +52,16 @@ export default class Cursor {
         let textureTitle: CursorTextures
         for (textureTitle in CURSOR_TEXTURES_URL) {
             if (CURSOR_TEXTURES_URL.hasOwnProperty(textureTitle)) {
-                this.cursorTextures.set(textureTitle, this.textureLoader.load(CURSOR_TEXTURES_URL[textureTitle]));
+                this.cursorTextures.set(textureTitle, window.textureLoader.load(CURSOR_TEXTURES_URL[textureTitle]));
             }
         }
 
         //load navigation textures
         this.navigationTextures = [
-            textureLoader.load('/images/navigation/hero-s.PNG'),
-            textureLoader.load('/images/navigation/about-s.PNG'),
-            textureLoader.load('/images/navigation/portfolio-s.PNG'),
-            textureLoader.load('/images/navigation/contact-s.PNG')
+            window.textureLoader.load('/images/navigation/hero-s.PNG'),
+            window.textureLoader.load('/images/navigation/about-s.PNG'),
+            window.textureLoader.load('/images/navigation/portfolio-s.PNG'),
+            window.textureLoader.load('/images/navigation/contact-s.PNG')
         ]
 
         this.uniforms = {
@@ -82,6 +80,7 @@ export default class Cursor {
         const cursorMeshMaterial = new ShaderMaterial({
             alphaTest: 0,
             transparent: true,
+            //@ts-ignore
             uniforms: this.uniforms,
             vertexShader: cursorVertex,
             fragmentShader: defaultFragment,

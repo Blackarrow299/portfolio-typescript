@@ -1,16 +1,13 @@
 import { gsap } from "gsap"
-import Scroll from "./Scroll"
 import ShowCase from "./ShowCase"
 import { event } from "@/utils/utils"
 
 export default class showCaseDetail {
     declare private $els
     declare private parent
-    declare private scroll
     declare private renderer
     declare private tl;
-    constructor($el: HTMLElement, parent: ShowCase, scroll: Scroll, renderer: THREE.WebGLRenderer) {
-        this.scroll = scroll
+    constructor($el: HTMLElement, parent: ShowCase, renderer: THREE.WebGLRenderer) {
         this.parent = parent
         this.renderer = renderer
         this.$els = {
@@ -109,9 +106,10 @@ export default class showCaseDetail {
 
     in() {
         event('MainScene:Stop')
+        event('Scroll:Lock')
         this.parent.isAnimating = true
         this.parent.onGrid = false
-        this.scroll.lock()
+
 
         gsap.set(this.$els.elm, {
             display: 'grid'
@@ -150,6 +148,7 @@ export default class showCaseDetail {
     }
 
     out() {
+        event('MainScene:Start')
         this.parent.isAnimating = true
 
         const { width, height, top, left, right, bottom } = this.$els.tile.getBoundingClientRect()
@@ -169,7 +168,7 @@ export default class showCaseDetail {
                     this.parent.$els.activeElem = this.$els.tile
                     this.parent.isAnimating = false
                     this.parent.onGrid = true
-                    this.scroll.unlock()
+                    event('Scroll:Unlock')
                 }
             })
 

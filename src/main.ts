@@ -9,8 +9,6 @@ import Rellax from 'rellax'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from '@/ts/Particles'
 import IsMobileDevice from './ts/IsMobileDevice'
-import Slider from './ts/Slider'
-import PORTFOLIO_IMAGES from '@/data/portfolio-images'
 import MobileNavigation from './ts/MobileNav'
 import MainScene from './ts/MainScene'
 import PortfolioScene from './ts/PortfolioScene'
@@ -27,6 +25,7 @@ const preloader = document.querySelector('#preloader')
 const loadingManager = new THREE.LoadingManager()
 const fbxLoader = new FBXLoader(loadingManager)
 const textureLoader = new THREE.TextureLoader(loadingManager);
+window.textureLoader = textureLoader
 
 let windowLoaded = false
 let threeLoaded = false
@@ -59,16 +58,16 @@ const loadingInterval = setInterval(() => {
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
-const scroll = new Scroll()
+new Scroll()
 const mainScene = new MainScene(fbxLoader)
-const portfolioScene = new PortfolioScene(textureLoader, scroll)
+const portfolioScene = new PortfolioScene()
 const particles = new Particles(mainScene.scene);
-const mobileNavigation = new MobileNavigation(scroll)
+new MobileNavigation()
 // const slider = new Slider(PORTFOLIO_IMAGES[0], textureLoader)
-const parallax = new Parallax('.parallax-element')
-const cursor = new Cursor(textureLoader, mainScene.scene, mainScene.camera)
+new Parallax('.parallax-element')
+const cursor = new Cursor(mainScene.scene, mainScene.camera)
 
-const rellax = new Rellax('.rellax', { speed: -2, });
+new Rellax('.rellax', { speed: -2, });
 
 const welcome_big_title = document.querySelector<HTMLElement>('#welcome_big_title')
 const titleAnimation = new LetterFadeInAnimation(welcome_big_title?.querySelector('h1'), 0.05)

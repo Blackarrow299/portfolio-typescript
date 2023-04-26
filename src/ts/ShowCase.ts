@@ -2,23 +2,23 @@ import { PORTFOLIO_IMAGES } from "@/utils/constants"
 import { getViewSize } from "@/utils/utils"
 import { Clock, Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2 } from "three"
 import PortfolioScene from "./PortfolioScene"
-import { deformationVertex, portfolioNoiseFragment } from "@/glsl"
+import { deformationVertex } from "@/glsl"
+// @ts-ignore
 import fragment from "@/glsl/fragment.glsl"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import Scroll from "./Scroll"
 import showCaseDetail from "./ShowCaseDetail"
 import Slider from "./Slider"
 
 const clock = new Clock()
 
 export default class ShowCase {
+    declare index
     declare camera: PerspectiveCamera
     declare scene: Scene
     declare mesh: Mesh
     declare private uOffset
     declare uniforms
-    declare private textureLoader
     declare $els
     declare private scaleX
     declare private scaleY
@@ -29,8 +29,10 @@ export default class ShowCase {
     declare isAnimating
     declare private scroll
     declare private showCaseDetail
+    declare textures
 
-    constructor($el: HTMLElement, index: number, textureLoader: THREE.TextureLoader, parent: PortfolioScene, scroll: Scroll) {
+    constructor($el: HTMLElement, index: number, parent: PortfolioScene) {
+        this.index = index
         this.$els = {
             elm: $el,
             gridTileElem: $el.querySelector<HTMLElement>('.p-showcase-tile')!,
@@ -39,13 +41,14 @@ export default class ShowCase {
             activeElem: $el.querySelector<HTMLElement>('.p-showcase-tile')!
         }
 
-        this.scroll = scroll
-        this.textureLoader = textureLoader
         this.uOffset = parent.uOffset
         this.parent = parent
+
+        this.textures = PORTFOLIO_IMAGES[index].map((url) => window.textureLoader.load(url))
+
         this.uniforms = {
-            u_image: { value: this.textureLoader.load(PORTFOLIO_IMAGES[index][0]) },
-            u_nextImage: { value: this.textureLoader.load(PORTFOLIO_IMAGES[index][2]) },
+            u_image: { value: this.textures[0] },
+            u_nextImage: { value: this.textures[1] },
             u_res: { value: new Vector2(window.innerWidth, window.innerHeight) },
             u_offset: this.uOffset,
             u_power: { value: .5 },
@@ -69,9 +72,9 @@ export default class ShowCase {
         this.onDetail = !this.onGrid
         this.isAnimating = false
 
-        this.showCaseDetail = new showCaseDetail(this.$els.detailElem, this, this.scroll, this.parent.renderer)
+        this.showCaseDetail = new showCaseDetail(this.$els.detailElem, this, this.parent.renderer)
         this.init()
-
+        new Slider(this)
     }
 
     private init() {
@@ -96,7 +99,7 @@ export default class ShowCase {
         this.scene.add(this.mesh);
 
         this.bindEvent()
-        new Slider(this)
+
         // setTimeout(() => {
         //     this.showCaseDetail.show()
         // }, 2500)

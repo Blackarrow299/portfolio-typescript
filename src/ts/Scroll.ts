@@ -23,11 +23,17 @@ export default class Scroll {
 
         requestAnimationFrame(this.raf.bind(this))
 
+        this.bindEvents()
     }
 
     private raf(time: any) {
         this.lenis.raf(time)
         requestAnimationFrame(this.raf.bind(this))
+    }
+
+    private bindEvents() {
+        document.addEventListener('Scroll:Lock', this.lock.bind(this))
+        document.addEventListener('Scroll:Unlock', this.unlock.bind(this))
     }
 
     lock() {

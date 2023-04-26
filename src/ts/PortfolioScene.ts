@@ -1,6 +1,5 @@
-import { Color, PerspectiveCamera, Scene, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { Color, PerspectiveCamera, Scene, Vector2, WebGLRenderer } from "three";
 import { gsap } from "gsap";
-import Scroll from "./Scroll";
 import ShowCase from "./ShowCase";
 
 const clearColor = new Color('#000');
@@ -12,21 +11,17 @@ export default class PortfolioScene {
     declare camera: PerspectiveCamera
     declare private showCases: ShowCase[]
     declare uOffset
-    declare private textureLoader
     declare private scaleX: number
     declare private scaleY: number
-    declare private scroll: Scroll
 
-    constructor(textureLoader: TextureLoader, scroll: Scroll) {
-        this.scroll = scroll
-        this.textureLoader = textureLoader
+    constructor() {
         this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
         this.uOffset = { value: new Vector2(0, 0) }
         this.showCases = []
-        this.init(scroll)
+        this.init()
     }
 
-    private init(scroll: Scroll) {
+    private init() {
         this.renderer.domElement.style.position = "absolute";
         this.renderer.domElement.style.top = '0';
         this.renderer.domElement.style.left = '0';
@@ -35,7 +30,7 @@ export default class PortfolioScene {
         document.body.appendChild(this.renderer.domElement);
 
         document.querySelectorAll<HTMLElement>('.p-showcase').forEach(($el, index) => {
-            const showCase = new ShowCase($el, index, this.textureLoader, this, scroll)
+            const showCase = new ShowCase($el, index, this)
             this.showCases.push(showCase)
         })
 
