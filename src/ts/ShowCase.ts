@@ -1,19 +1,23 @@
 import { PORTFOLIO_IMAGES } from "@/utils/constants"
 import { getViewSize } from "@/utils/utils"
-import { Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2 } from "three"
+import { Clock, Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2 } from "three"
 import PortfolioScene from "./PortfolioScene"
 import { deformationVertex, portfolioNoiseFragment } from "@/glsl"
+import fragment from "@/glsl/fragment.glsl"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Scroll from "./Scroll"
 import showCaseDetail from "./ShowCaseDetail"
+import Slider from "./Slider"
+
+const clock = new Clock()
 
 export default class ShowCase {
     declare camera: PerspectiveCamera
     declare scene: Scene
     declare mesh: Mesh
     declare private uOffset
-    declare private uniforms
+    declare uniforms
     declare private textureLoader
     declare $els
     declare private scaleX
@@ -40,12 +44,14 @@ export default class ShowCase {
         this.uOffset = parent.uOffset
         this.parent = parent
         this.uniforms = {
-            uTexture: { value: this.textureLoader.load(PORTFOLIO_IMAGES[index][0]) },
-            uResolution: { value: new Vector2(window.innerWidth, window.innerHeight) },
-            uDisp: { value: 1.0 },
-            uOffset: this.uOffset,
-            uAlpha: { value: 1 },
-            uOverlay: { value: 0 }
+            u_image: { value: this.textureLoader.load(PORTFOLIO_IMAGES[index][0]) },
+            u_nextImage: { value: this.textureLoader.load(PORTFOLIO_IMAGES[index][2]) },
+            u_res: { value: new Vector2(window.innerWidth, window.innerHeight) },
+            u_offset: this.uOffset,
+            u_power: { value: .5 },
+            u_disp: { value: 0 },
+            u_time: { value: 0 },
+            u_progress: { value: 0 }
         }
 
         const { width, height } = this.$els.gridTileElem.getBoundingClientRect()
@@ -69,17 +75,17 @@ export default class ShowCase {
     }
 
     private init() {
-        ScrollTrigger.create({
-            trigger: this.$els.gridTileElem,
-            start: 'top center+=20%',
-            end: 'bottom top',
-            onEnter: () => {
-                gsap.to(this.uniforms.uDisp, {
-                    value: 0.0,
-                    duration: 0.5
-                })
-            }
-        })
+        // ScrollTrigger.create({
+        //     trigger: this.$els.gridTileElem,
+        //     start: 'top center+=20%',
+        //     end: 'bottom top',
+        //     onEnter: () => {
+        //     //     gsap.to(this.uniforms.u_disp, {
+        //     //         value: 0.0,
+        //     //         duration: 0.5
+        //     //     })
+        //     // }
+        // })
 
         this.setupCamera()
         // create a scene
@@ -90,6 +96,7 @@ export default class ShowCase {
         this.scene.add(this.mesh);
 
         this.bindEvent()
+        new Slider(this)
         // setTimeout(() => {
         //     this.showCaseDetail.show()
         // }, 2500)
@@ -108,10 +115,12 @@ export default class ShowCase {
             duration: 0.5
         })
 
-        gsap.to(this.uniforms.uOverlay, {
-            value: 0.8,
-            duration: 0.8
-        })
+        // gsap.to(this.uniforms.u_power, {
+        //     value: 0.4,
+        //     duration: 0.8
+        // })
+
+
     }
 
     onMouseLeave() {
@@ -120,10 +129,10 @@ export default class ShowCase {
             duration: 0.5
         })
 
-        gsap.to(this.uniforms.uOverlay, {
-            value: 0,
-            duration: 0.5
-        })
+        // gsap.to(this.uniforms.u_power, {
+        //     value: 0.1,
+        //     duration: 0.5
+        // })
     }
 
     onClick() {
@@ -141,8 +150,11 @@ export default class ShowCase {
             alphaTest: 0,
             transparent: true,
             uniforms: this.uniforms,
-            fragmentShader: portfolioNoiseFragment,
-            vertexShader: deformationVertex
+            fragmentShader: fragment,
+            vertexShader: deformationVertex,
+            defines: {
+                PR: window.devicePixelRatio.toFixed(1)
+            }
         });
 
         this.mesh = new Mesh(geometry, material);
@@ -165,6 +177,7 @@ export default class ShowCase {
     }
 
     animate() {
+        this.uniforms.u_time.value = clock.getElapsedTime()
         if (!this.isAnimating) {
             const rect = this.$els.activeElem.getBoundingClientRect();
             const { left, right, top, bottom, width, height } = rect;
