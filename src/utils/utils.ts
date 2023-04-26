@@ -45,7 +45,5 @@ export const event = (eventName: string) => {
         e = new Event(eventName)
         window.events[eventName] = e
     }
-    console.log(e);
-
     document.dispatchEvent(e)
 }

@@ -2,11 +2,11 @@ import { PORTFOLIO_IMAGES } from "@/utils/constants"
 import { getViewSize } from "@/utils/utils"
 import { Clock, Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2 } from "three"
 import PortfolioScene from "./PortfolioScene"
-import { deformationVertex } from "@/glsl"
+// @ts-ignore
+import vertex from "@/glsl/deformationVertex.glsl"
 // @ts-ignore
 import fragment from "@/glsl/fragment.glsl"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import showCaseDetail from "./ShowCaseDetail"
 import Slider from "./Slider"
 
@@ -20,12 +20,11 @@ export default class ShowCase {
     declare private uOffset
     declare uniforms
     declare $els
-    declare private scaleX
-    declare private scaleY
+    declare private scale
+    declare private zoomVector
     declare rect
     declare private parent
     declare onGrid
-    declare onDetail
     declare isAnimating
     declare private scroll
     declare private showCaseDetail
@@ -54,7 +53,8 @@ export default class ShowCase {
             u_power: { value: .5 },
             u_disp: { value: 0 },
             u_time: { value: 0 },
-            u_progress: { value: 0 }
+            u_progress: { value: 0 },
+            u_hover: { value: 0 }
         }
 
         const { width, height } = this.$els.gridTileElem.getBoundingClientRect()
@@ -68,41 +68,40 @@ export default class ShowCase {
             bottom: 0
         }
 
+        this.scale = {
+            x: 0,
+            y: 0
+        }
+
+        this.zoomVector = {
+            x: 0,
+            y: 0,
+        }
+
         this.onGrid = true
-        this.onDetail = !this.onGrid
         this.isAnimating = false
 
         this.showCaseDetail = new showCaseDetail(this.$els.detailElem, this, this.parent.renderer)
+
         this.init()
         new Slider(this)
     }
 
     private init() {
-        // ScrollTrigger.create({
-        //     trigger: this.$els.gridTileElem,
-        //     start: 'top center+=20%',
-        //     end: 'bottom top',
-        //     onEnter: () => {
-        //     //     gsap.to(this.uniforms.u_disp, {
-        //     //         value: 0.0,
-        //     //         duration: 0.5
-        //     //     })
-        //     // }
-        // })
-
         this.setupCamera()
-        // create a scene
+
+        const { width: scaleX, height: scaleY } = getViewSize(this.camera)
+        this.scale.x = scaleX
+        this.scale.y = scaleY
+
+        const zoomValue = 1.1
+        this.zoomVector.x = scaleX * zoomValue
+        this.zoomVector.y = scaleY * zoomValue
+
         this.scene = new Scene();
-
         this.setupMesh()
-
         this.scene.add(this.mesh);
-
         this.bindEvent()
-
-        // setTimeout(() => {
-        //     this.showCaseDetail.show()
-        // }, 2500)
     }
 
     private bindEvent() {
@@ -118,12 +117,13 @@ export default class ShowCase {
             duration: 0.5
         })
 
-        // gsap.to(this.uniforms.u_power, {
-        //     value: 0.4,
-        //     duration: 0.8
-        // })
+        gsap.to(this.uniforms.u_hover, {
+            value: 1,
+            duration: 0.5
+        })
 
-
+        gsap.to
+        this.zoomIn()
     }
 
     onMouseLeave() {
@@ -131,11 +131,12 @@ export default class ShowCase {
             opacity: 0,
             duration: 0.5
         })
+        gsap.to(this.uniforms.u_hover, {
+            value: 0,
+            duration: 0.5
+        })
 
-        // gsap.to(this.uniforms.u_power, {
-        //     value: 0.1,
-        //     duration: 0.5
-        // })
+        this.zoomOut()
     }
 
     onClick() {
@@ -154,7 +155,7 @@ export default class ShowCase {
             transparent: true,
             uniforms: this.uniforms,
             fragmentShader: fragment,
-            vertexShader: deformationVertex,
+            vertexShader: vertex,
             defines: {
                 PR: window.devicePixelRatio.toFixed(1)
             }
@@ -165,12 +166,28 @@ export default class ShowCase {
 
     }
 
-    updateMeshScale() {
-        const { width: scaleX, height: scaleY } = getViewSize(this.camera)
-        this.scaleX = scaleX
-        this.scaleY = scaleY
+    zoomOut() {
 
-        this.mesh.scale.set(this.scaleX, this.scaleY, 1)
+        const { width: x, height: y } = getViewSize(this.camera)
+
+        gsap.to(this.scale, {
+            x,
+            y,
+            duration: 0.5
+        })
+    }
+
+    zoomIn() {
+
+        gsap.to(this.scale, {
+            x: this.zoomVector.x,
+            y: this.zoomVector.y,
+            duration: 0.5
+        })
+    }
+
+    updateMeshScale() {
+        this.mesh.scale.set(this.scale.x, this.scale.y, 1)
     }
 
     private setupCamera() {
@@ -181,7 +198,9 @@ export default class ShowCase {
 
     animate() {
         this.uniforms.u_time.value = clock.getElapsedTime()
+        this.updateMeshScale()
         if (!this.isAnimating) {
+
             const rect = this.$els.activeElem.getBoundingClientRect();
             const { left, right, top, bottom, width, height } = rect;
 

@@ -48,6 +48,7 @@ export default class PortfolioScene {
     }
 
     private onScroll(e: WheelEvent) {
+        if (window.isScrollLocked) return
         clearTimeout(isScrolling);
         // Set a timeout to detect when scrolling stops
         isScrolling = setTimeout(() => {

@@ -6,5 +6,6 @@ export declare global {
             [key: string]: Event
         },
         textureLoader: THREE.TextureLoader,
+        isScrollLocked: boolean
     }
 }

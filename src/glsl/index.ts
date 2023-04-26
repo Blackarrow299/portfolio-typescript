@@ -1,6 +1,6 @@
 
 export const deformationVertex = `
-      uniform vec2 uOffset;
+      uniform vec2 u_offset;
       varying vec2 vUv;
 
       float M_PI = 3.141529;
@@ -13,7 +13,7 @@ export const deformationVertex = `
 
       void main(){
           vUv = uv;
-          vec3 newPosition = deformationCurve(position, uv, uOffset);
+          vec3 newPosition = deformationCurve(position, uv, u_offset);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
       }
     `

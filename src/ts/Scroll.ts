@@ -37,10 +37,12 @@ export default class Scroll {
     }
 
     lock() {
+        window.isScrollLocked = true
         this.lenis.stop()
     }
 
     unlock() {
+        window.isScrollLocked = false
         this.lenis.start()
     }
 }
