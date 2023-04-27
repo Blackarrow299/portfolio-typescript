@@ -5,6 +5,19 @@ export const PAGE_SECTIONS = [
     '#contact'
 ]
 
+export const PAGE_SECTIONS_IMAGES = [
+    "/images/navigation/hero-s.PNG",
+    "/images/navigation/about-s.PNG",
+    "/images/navigation/portfolio-s.PNG",
+    "/images/navigation/contact-s.PNG",
+]
+
+export const CURSOR_TEXTURES_URL = {
+    hi: "/images/cursor/hi.png",
+    visit: "/images/cursor/visit.svg",
+    default: "/images/cursor/cursor.png",
+}
+
 export const PORTFOLIO_IMAGES = [
     [
         '/images/portfolio/portfolio-1.png',

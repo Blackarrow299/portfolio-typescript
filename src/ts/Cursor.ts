@@ -3,18 +3,12 @@ import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
 import { deformationVertex as cursorVertex, defaultFragment } from '@/glsl'
 import { clamp } from 'three/src/math/MathUtils'
-import { PAGE_SECTIONS } from '../utils/constants'
+import { CURSOR_TEXTURES_URL } from '../utils/constants'
 
 export interface Uniform {
     uOffset: IUniform<Vector2>
     uTexture: IUniform<Texture>
     uAlpha: IUniform<number>
-}
-
-export const CURSOR_TEXTURES_URL = {
-    hi: "/images/cursor/hi.png",
-    visit: "/images/cursor/visit.svg",
-    default: "/images/cursor/cursor.png",
 }
 
 export type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
@@ -56,14 +50,6 @@ export default class Cursor {
             }
         }
 
-        //load navigation textures
-        this.navigationTextures = [
-            window.textureLoader.load('/images/navigation/hero-s.PNG'),
-            window.textureLoader.load('/images/navigation/about-s.PNG'),
-            window.textureLoader.load('/images/navigation/portfolio-s.PNG'),
-            window.textureLoader.load('/images/navigation/contact-s.PNG')
-        ]
-
         this.uniforms = {
             uOffset: { value: new Vector2(0, 0) },
             uTexture: { value: this.cursorTextures.get('default')! },
@@ -94,7 +80,6 @@ export default class Cursor {
         this.bindEvent()
 
         this.initHoverEffect()
-        this.initNavigationHover()
     }
 
     private bindEvent() {
@@ -167,40 +152,4 @@ export default class Cursor {
         })
     }
 
-    public initNavigationHover() {
-        const navigations = document.querySelector<HTMLElement>('#nav')
-
-        if (this.navigationTextures && navigations) {
-            navigations.addEventListener('mousemove', (e) => {
-                let target = e.target as Element
-                if (target.tagName === 'LI') {
-                    this.changeTexture(this.navigationTextures[+target.getAttribute('data-index')!])
-                    gsap.to(this.mesh.scale, {
-                        x: 3.5,
-                        y: 1.8,
-                        duration: 0.1,
-                        ease: "Power1.easeIn"
-                    })
-                }
-            })
-            navigations.addEventListener('mouseleave', () => {
-                gsap.to(this.mesh.scale, {
-                    x: 1,
-                    y: 1,
-                    duration: 0.1,
-                    ease: "Power1.easeOut"
-                })
-                this.changeTextureByName('default')
-            })
-
-            navigations.addEventListener('click', (e) => {
-                let target = e.target as Element
-                if (target.tagName === 'LI') {
-                    const val = target?.getAttribute('data-index') || '0'
-                    if (isNaN(+val)) return
-                    gsap.to(window, { duration: 2, scrollTo: PAGE_SECTIONS[+target.getAttribute('data-index')!] });
-                }
-            })
-        }
-    }
 }

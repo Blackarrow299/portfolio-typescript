@@ -1,6 +1,6 @@
 import { shuffleArray, splitText } from "./utils";
 
-export class LetterFadeInAnimation {
+export default class LetterFadeInAnimation {
     private target: HTMLElement | undefined | null;
     private spans: Array<HTMLSpanElement> = []
     private speed: number
