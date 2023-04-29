@@ -1,6 +1,7 @@
 import { PAGE_SECTIONS, PAGE_SECTIONS_IMAGES } from "@/utils/constants";
 import Cursor from "./Cursor";
 import { gsap } from "gsap";
+import { event } from "@/utils/utils";
 
 export default class Navigation {
     declare cursor
@@ -31,13 +32,12 @@ export default class Navigation {
     }
 
     mouseMove(e: MouseEvent) {
-
         let target = e.target as Element
         if (target.tagName === 'LI') {
             this.cursor.changeTexture(this.navigationTextures[+target.getAttribute('data-index')!])
             gsap.to(this.cursor.mesh.scale, {
-                x: 3.5,
-                y: 1.8,
+                x: 3.7,
+                y: 2,
                 duration: 0.1,
                 ease: "Power1.easeIn"
             })
@@ -57,6 +57,7 @@ export default class Navigation {
     click(e: MouseEvent) {
         let target = e.target as Element
         if (target.tagName === 'LI') {
+            event('Navigation:Click')
             const val = target?.getAttribute('data-index') || '0'
             if (isNaN(+val)) return
             gsap.to(window, { duration: 2, scrollTo: PAGE_SECTIONS[+target.getAttribute('data-index')!] });

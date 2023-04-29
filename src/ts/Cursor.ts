@@ -1,14 +1,17 @@
 import { Mesh, Scene, Vector3, Vector2, PlaneGeometry, ShaderMaterial, Camera, Texture, IUniform } from 'three'
 import { lerp } from '../utils/utils'
 import { gsap } from 'gsap'
-import { deformationVertex as cursorVertex, defaultFragment } from '@/glsl'
+// @ts-ignore
+import vertex from '@/glsl/deformationVertex.glsl'
+//@ts-ignore
+import fragment from '@/glsl/defaultFragment.glsl'
 import { clamp } from 'three/src/math/MathUtils'
 import { CURSOR_TEXTURES_URL } from '../utils/constants'
 
 export interface Uniform {
-    uOffset: IUniform<Vector2>
-    uTexture: IUniform<Texture>
-    uAlpha: IUniform<number>
+    u_offset: IUniform<Vector2>
+    u_image: IUniform<Texture>
+    u_alpha: IUniform<number>
 }
 
 export type CursorTextures = keyof typeof CURSOR_TEXTURES_URL
@@ -20,8 +23,7 @@ export default class Cursor {
     declare public uniforms: Uniform
     declare public position: Vector3
     declare cursorVec: Vector3
-    private cursorX: number = 0
-    private cursorY: number = 0
+    declare cursorPos: { x: number, y: number }
     //declare public defaultTexture: Texture
     declare cursorTextures: Map<CursorTextures, Texture>
 
@@ -50,10 +52,12 @@ export default class Cursor {
             }
         }
 
+        this.cursorPos = { x: 0, y: 0 }
+
         this.uniforms = {
-            uOffset: { value: new Vector2(0, 0) },
-            uTexture: { value: this.cursorTextures.get('default')! },
-            uAlpha: { value: 0.5 },
+            u_offset: { value: new Vector2(0, 0) },
+            u_image: { value: this.cursorTextures.get('default')! },
+            u_alpha: { value: 0.5 },
         }
 
         this.init()
@@ -68,8 +72,8 @@ export default class Cursor {
             transparent: true,
             //@ts-ignore
             uniforms: this.uniforms,
-            vertexShader: cursorVertex,
-            fragmentShader: defaultFragment,
+            vertexShader: vertex,
+            fragmentShader: fragment,
         });
 
         this.mesh.geometry = cursorMeshGeometry
@@ -103,12 +107,13 @@ export default class Cursor {
     }
 
     public onMove(e: MouseEvent) {
-        this.cursorX = (e.clientX / window.innerWidth) * 2 - 1
-        this.cursorY = -(e.clientY / window.innerHeight) * 2 + 1
+
+        this.cursorPos.x = (e.clientX / window.innerWidth) * 2 - 1
+        this.cursorPos.y = -(e.clientY / window.innerHeight) * 2 + 1
 
         this.cursorVec.set(
-            lerp(this.cursorX, (e.clientX / window.innerWidth) * 2 - 1, 1),
-            this.cursorY,
+            this.cursorPos.x,
+            this.cursorPos.y,
             0.5
         )
 
@@ -117,29 +122,29 @@ export default class Cursor {
         const distance = -this.camera.position.z / this.cursorVec.z
         this.position.copy(this.camera.position).add(this.cursorVec.multiplyScalar(distance))
 
-        this.uniforms.uOffset.value.set(
-            clamp(e.movementX * 0.003, -0.1, 0.1),
-            clamp(-e.movementY * 0.003, -0.1, 0.1)
+        this.uniforms.u_offset.value.set(
+            clamp(e.movementX * 0.003, -0.2, 0.2),
+            clamp(-e.movementY * 0.003, -0.2, 0.2)
         )
     }
 
     public animate() {
         if (window.isMobile) return
         this.mesh.position.set(this.position.x, this.position.y, 0)
-        this.uniforms.uOffset.value.set(
-            lerp(this.uniforms.uOffset.value.x, 0, 0.2),
-            lerp(this.uniforms.uOffset.value.y, 0, 0.2)
+        this.uniforms.u_offset.value.set(
+            lerp(this.uniforms.u_offset.value.x, 0, 0.2),
+            lerp(this.uniforms.u_offset.value.y, 0, 0.2)
         )
     }
 
     public changeTextureByName(textureName: CursorTextures) {
         if (window.isMobile) return
-        this.uniforms.uTexture.value = this.cursorTextures.get(textureName)!
+        this.uniforms.u_image.value = this.cursorTextures.get(textureName)!
     }
 
     public changeTexture(texture: Texture) {
         if (window.isMobile) return
-        this.uniforms.uTexture.value = texture
+        this.uniforms.u_image.value = texture
     }
 
     public initHoverEffect() {

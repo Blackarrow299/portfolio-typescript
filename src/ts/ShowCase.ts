@@ -5,7 +5,7 @@ import PortfolioScene from "./PortfolioScene"
 // @ts-ignore
 import vertex from "@/glsl/deformationVertex.glsl"
 // @ts-ignore
-import fragment from "@/glsl/fragment.glsl"
+import fragment from "@/glsl/showcaseFragment.glsl"
 import { gsap } from "gsap"
 import showCaseDetail from "./ShowCaseDetail"
 import Slider from "./Slider"

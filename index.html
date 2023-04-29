@@ -15,14 +15,16 @@
     </div>
     <div
       id="preloader"
-      class="h-screen w-screen flex justify-center items-center absolute z-[9999] bg-background"
+      class="h-screen w-screen flex justify-center items-center absolute z-[9999]"
     >
-      <h2 class="text-6xl">LOADING</h2>
+      <div class="bg-half bg-background w-full h-1/2 top-0 absolute"></div>
+      <div class="bg-half bg-background w-full h-1/2 bottom-0 absolute"></div>
+      <h2 class="text-6xl z-10">LOADING</h2>
     </div>
     <main
       id="app"
       class="w-screen h-auto"
-      style="opacity: 0; height: 100vh; overflow: hidden; width: 100vw"
+      style="height: 100vh; overflow: hidden; width: 100vw"
     >
       <!-- mobile nav -->
       <nav
@@ -56,16 +58,16 @@
           </svg>
         </div>
         <ul class="text-4xl space-y-2 flex justify-center flex-col w-full">
-          <li class="overflow-y-hidden">
+          <li class="overflow-y-hidden cursor-pointer">
             <a data-index="0" class="block">Home</a>
           </li>
-          <li class="overflow-y-hidden">
+          <li class="overflow-y-hidden cursor-pointer">
             <a data-index="1" class="block">About</a>
           </li>
-          <li class="overflow-y-hidden">
+          <li class="overflow-y-hidden cursor-pointer">
             <a data-index="2" class="block">Portfolio</a>
           </li>
-          <li class="overflow-y-hidden">
+          <li class="overflow-y-hidden cursor-pointer">
             <a data-index="3" class="block">Contact</a>
           </li>
         </ul>
@@ -97,25 +99,25 @@
       >
         <li
           data-index="0"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
+          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
         >
           Home
         </li>
         <li
           data-index="1"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
+          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
         >
           About
         </li>
         <li
           data-index="2"
-          class="mix-blend-overlay cursor-pointer tracking-widest"
+          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
         >
           Portfolio
         </li>
         <li
           data-index="3"
-          class="mix-blend-overlay cursor-pointer tracking-widest flex items-center"
+          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden flex items-center"
         >
           Contact
           <img
@@ -190,7 +192,7 @@
             FULL STACK DEVELOPER
           </h2>
           <h1
-            class="text-white text-8xl lg:text-[15rem] font-humane font-bold tracking-widest"
+            class="overflow-hidden text-white text-8xl lg:text-[15rem] font-humane font-bold tracking-widest"
           >
             YASSINE GOUMNI
           </h1>
@@ -198,9 +200,9 @@
 
         <div id="scrollDown">
           <h2
-            class="font-neueMetanaNext !text-primary text-sm md:text-base tracking-[10px]"
+            class="font-neueMetanaNext !text-primary text-sm md:text-base tracking-[10px] overflow-hidden"
           >
-            SCROLL DOWN
+            <span class="inline-block">SCROLL DOWN</span>
           </h2>
           <img
             src="/images/scrollDown.svg"
@@ -212,11 +214,21 @@
           id="h-socials"
           class="md:flex hidden z-10 items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 left-5"
         >
-          <a class="flex items-center" href="/" data-hover="visit">
+          <a
+            class="flex items-center"
+            target="_blank"
+            href="https://github.com/Blackarrow299"
+            data-hover="visit"
+          >
             Github
             <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
           </a>
-          <a class="flex items-center" href="/" data-hover="visit">
+          <a
+            class="flex items-center"
+            target="_blank"
+            href="https://www.linkedin.com/in/yassine-goumni-902080224/"
+            data-hover="visit"
+          >
             Linkedin
             <img
               src="/icons/arrow-tr.svg"
@@ -324,7 +336,7 @@
         >
           <article class="p-showcase">
             <ul
-              class="flex justify-end list-none font-neueMetanaNext text-gray-400 space-x-4 text-[0.6rem] sm:text-xs mb-5"
+              class="flex justify-end list-none font-neueMetanaNext text-gray-400 space-x-4 text-[0.6rem] sm:text-xs mb-5 flex-wrap w-[80%] ml-auto"
             >
               <li>Typescript</li>
               <li>ReactJS</li>
@@ -332,7 +344,7 @@
             </ul>
             <div class="w-full relative">
               <div
-                class="p-showcase-tile opacity-0 p-hover w-full h-[220px] md:h-[360px] md:w-[640px] cursor-pointer"
+                class="p-showcase-tile opacity-0 p-hover w-full h-[280px] md:h-[360px] md:w-[640px] cursor-pointer"
               >
                 <span
                   class="text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-white rounded-full absolute font-humane font-bold text-4xl md:text-6xl flex justify-center items-center tracking-wide"
@@ -583,7 +595,9 @@
             or Inquiries ,or just to say hi
           </p>
           <a
-            class="flex items-center text-lg text-primary font-neueMetanaNext mt-16"
+            data-hover="visit"
+            href="mailto:yassine.goumni@gmail.com"
+            class="flex items-center text-lg cursor-pointer text-primary font-neueMetanaNext mt-16"
           >
             Say Hi
             <img src="/icons/arrow-tr.svg" class="ml-1 mb-1" alt="github" />
@@ -595,6 +609,32 @@
           alt=""
           srcset=""
         />
+        <div
+          class="md:flex z-10 items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 right-4"
+        >
+          <a
+            class="flex items-center"
+            target="_blank"
+            href="https://github.com/Blackarrow299"
+            data-hover="visit"
+          >
+            Github
+            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
+          </a>
+          <a
+            class="flex items-center"
+            target="_blank"
+            href="https://www.linkedin.com/in/yassine-goumni-902080224/"
+            data-hover="visit"
+          >
+            Linkedin
+            <img
+              src="/icons/arrow-tr.svg"
+              class="ml-1 mb-1"
+              alt="arrow top right"
+            />
+          </a>
+        </div>
       </section>
     </main>
   </body>

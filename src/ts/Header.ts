@@ -1,18 +1,24 @@
-import TitleAnimation from "@/utils/TitleAnimation"
+import { shuffleArray } from "@/utils/utils"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-
+import Splitting from "splitting"
 
 export default class Header {
     declare $els
+    declare tl
     constructor() {
         const big_title_box = document.querySelector<HTMLElement>('#welcome_big_title')
 
         this.$els = {
-            h1: big_title_box?.querySelector<HTMLElement>('h1'),
-            h2: big_title_box?.querySelector<HTMLElement>('h2')
+            h1: big_title_box?.querySelector<HTMLElement>('h1')!,
+            h2: big_title_box?.querySelector<HTMLElement>('h2')!,
+            navEls: document.querySelectorAll<HTMLElement>('#nav li')!,
+            socials: document.querySelectorAll<HTMLElement>('#h-socials a')!,
+            scrollDown: document.querySelector<HTMLElement>('#scrollDown')!,
+            scrollDownText: document.querySelector<HTMLElement>('#scrollDown h2 span')!,
+            scrollDownImg: document.querySelector<HTMLElement>('#scrollDown img')!
         }
-
+        this.tl = gsap.timeline({ paused: true })
         this.init()
     }
 
@@ -27,13 +33,56 @@ export default class Header {
                 gsap.to(["#fog", "#scrollDown", "#h-socials"], { opacity: 1, duration: 1, ease: 'Power1.in' });
             }
         });
+
+        const h1Split = Splitting({ by: 'chars', target: this.$els.h1 })
+        const h2Split = Splitting({ by: 'chars', target: this.$els.h2 })
+
+        h1Split[0].chars = shuffleArray(h1Split[0].chars!)
+
+        gsap.set(h1Split[0].chars, {
+            display: 'inline-block'
+        })
+
+        this.tl.from(h1Split[0].chars, {
+            y: 250,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.7
+        })
+
+        this.tl.from(h2Split[0].chars!, {
+            opacity: 0,
+            stagger: 0.1,
+            duration: 1.5
+        }, '<')
+
+        this.tl.from(this.$els.navEls, {
+            y: -50,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.1,
+        }, '<+=0.5')
+
+        this.tl.from(this.$els.socials, {
+            y: 50,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.1,
+        }, '<')
+
+        this.tl.from(this.$els.scrollDown, {
+            y: 50,
+            opacity: 0,
+            duration: 0.5,
+        }, '<+=0.8')
+
+        this.tl.from(this.$els.scrollDownText, {
+            y: 50,
+            duration: 0.5,
+        }, '<+=0.5')
     }
 
     in() {
-        const titleAnimation = new TitleAnimation(this.$els.h1, 0.05)
-        const titleAnimation1 = new TitleAnimation(this.$els.h2, 0.05)
-
-        titleAnimation.fadeIn()
-        titleAnimation1.fadeIn()
+        this.tl.play()
     }
 }

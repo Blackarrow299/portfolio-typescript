@@ -28,6 +28,7 @@ export default class showCaseDetail {
         }
         this.tl = gsap.timeline({ paused: true })
         this.$els.back.addEventListener('click', this.out.bind(this))
+        document.addEventListener('Navigation:Click', this.out.bind(this))
         this.init()
     }
 
@@ -93,10 +94,10 @@ export default class showCaseDetail {
         }, '>-=0.2')
 
         this.tl.from(this.$els.skills.querySelectorAll('div'), {
-            y: 100,
+            opacity: 0,
             duration: 0.5,
             stagger: 0.1,
-            ease: 'Power3.out'
+            ease: 'Power4.out'
         }, '>-=0.2')
 
         this.tl.then(() => {

@@ -14,16 +14,20 @@ export function shuffleArray<T>(array: T[]): T[] {
 export function splitText(target: HTMLElement | undefined | null): HTMLSpanElement[] {
     if (!target) return []
 
-    const content = target.innerText || '';
-    target.textContent = '';
+    const fragment = document.createDocumentFragment();
 
-    return Array.from(content).map((letter) => {
+    const a = Array.from(target.innerText || '').map((letter) => {
         const span = document.createElement('span');
         span.textContent = letter;
         span.style.display = 'inline-block'
-        target?.append(span);
+        fragment?.append(span);
         return span
-    }) || [];
+    })
+
+    target.textContent = '';
+    target.appendChild(fragment)
+
+    return a || [];
 }
 
 export function getViewSize(camera: THREE.PerspectiveCamera) {

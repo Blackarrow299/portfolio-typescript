@@ -14,7 +14,7 @@ import PortfolioScene from './ts/PortfolioScene'
 import Scroll from './ts/Scroll'
 import Parallax from './ts/Parallax'
 import Header from './ts/Header'
-import skills from './ts/Skills'
+import Skills from './ts/Skills'
 import Navigation from './ts/Navigation'
 
 const app = document.querySelector<HTMLElement>('#app')!
@@ -31,7 +31,7 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 window.textureLoader = textureLoader
 
 let windowLoaded = false
-let threeLoaded = false
+let threeLoaded = true
 
 window.addEventListener('load', () => {
     windowLoaded = true
@@ -47,31 +47,54 @@ const loadingInterval = setInterval(() => {
     if (windowLoaded && threeLoaded) {
         clearInterval(loadingInterval)
         setTimeout(() => {
-            gsap.set(preloader, {
+            const target = preloader?.querySelectorAll<HTMLElement>('.bg-half')!
+
+            const tl = gsap.timeline()
+
+            tl.to(preloader?.querySelector('h2')!, {
+                opacity: 0,
+                duration: 0.5,
+                ease: 'Power4.out'
+            })
+
+            tl.to(target[0], {
+                y: '-100%',
+                duration: 1,
+                ease: 'Power4.in'
+            })
+
+            tl.to(target[1], {
+                y: '100%',
+                duration: 1,
+                ease: 'Power4.in'
+            }, '<')
+
+            tl.call(() => {
+                header.in()
+            }, [], '<+=0.2')
+
+            tl.set(preloader, {
                 display: 'none'
             })
+
             gsap.set(app, {
-                opacity: 1,
                 overflow: 'initial',
                 height: 'auto'
             })
-
-            header.in()
 
             ScrollTrigger.refresh()
         }, 500)
     }
 }, 100)
-new Scroll()
-new skills()
 
+new Scroll()
+new Skills()
 new MobileNavigation()
 const mainScene = new MainScene(fbxLoader)
 const portfolioScene = new PortfolioScene()
 const cursor = new Cursor(mainScene.scene, mainScene.camera)
 new Navigation(cursor)
 const particles = new Particles(mainScene.scene);
-
 new Parallax('.parallax-element')
 
 new Rellax('.rellax', { speed: -2, });

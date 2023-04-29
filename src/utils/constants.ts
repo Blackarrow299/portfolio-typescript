@@ -13,7 +13,8 @@ export const PAGE_SECTIONS_IMAGES = [
 ]
 
 export const CURSOR_TEXTURES_URL = {
-    hi: "/images/cursor/hi.png",
+    none: "",
+    hi: "/images/cursor/hi.svg",
     visit: "/images/cursor/visit.svg",
     default: "/images/cursor/cursor.png",
 }
