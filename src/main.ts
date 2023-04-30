@@ -97,7 +97,7 @@ new Navigation(cursor)
 const particles = new Particles(mainScene.scene);
 new Parallax('.parallax-element')
 
-new Rellax('.rellax', { speed: -2, });
+new Rellax('.rellax', { speed: -2 });
 
 
 // render the scene
