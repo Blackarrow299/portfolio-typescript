@@ -5,8 +5,6 @@ module.exports = {
     extend: {
       fontFamily: {
         humane: ['Humane', 'arial', 'sans-serif'],
-        flaviotte: ['Flaviotte', 'sans-serif'],
-        fahkwang: ['Fahkwang', 'sans-serif'],
         neueMetanaNext: ['NeueMetanaNext', 'sans-serif'],
       },
       colors: {

@@ -2,8 +2,8 @@ import { Color, PerspectiveCamera, Scene, Vector2, WebGLRenderer } from "three";
 import { gsap } from "gsap";
 import ShowCase from "./ShowCase";
 
-const clearColor = new Color('#000');
-let isScrolling: NodeJS.Timeout;
+const clearColor = new Color('#000')
+let isScrolling: ReturnType<typeof setTimeout>
 
 export default class PortfolioScene {
     declare public renderer: WebGLRenderer

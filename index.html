@@ -2,10 +2,41 @@
 <html lang="en" class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/src/style.css" />
+    <title>Yassine Goumni 👨‍💻</title>
+    <meta
+      name="description"
+      content="Yassine goumni. Full stack developer, Web designer, UI/UX."
+    />
+    <meta
+      name="keywords"
+      content="full-stack development, web development, JavaScript,Typescript, NextJs, HTML, CSS, React,  Node.js, Express.js, MongoDB, SQL, REST APIs, MVC architecture, Git, responsive design, cross-browser compatibility, UX/UI design, testing, debugging, deployment, hosting, performance optimization, security best practices"
+    />
+    <meta name="author" content="Yassine Goumni" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#000000" />
+    <!-- Google bot meta tags -->
+    <meta name="googlebot" content="index, nofollow" />
+    <meta name="google" content="nositelinkssearchbox" />
+    <!-- Open Graph meta tags (for social media) -->
+    <meta property="og:title" content="Yassine Goumni Portfolio" />
+    <meta
+      property="og:description"
+      content="Yassine goumni. Full stack developer, Web designer, UI/UX."
+    />
+    <!-- TODO -->
+    <meta property="og:image" content="https://example.com/image.jpg" />
+    <meta property="og:url" content="https://example.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yassine Goumni Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Yassine goumni. Full stack developer, Web designer, UI/UX."
+    />
+    <meta name="twitter:image" content="https://example.com/image.jpg" />
     <script defer type="module" src="/src/main.ts"></script>
   </head>
   <body class="smooth-scroll w-screen font-neueMetanaNext">
@@ -59,23 +90,27 @@
         </div>
         <ul class="text-4xl space-y-2 flex justify-center flex-col w-full">
           <li class="overflow-y-hidden cursor-pointer">
-            <a data-index="0" class="block">Home</a>
+            <span data-index="0" class="block">Home</span>
           </li>
           <li class="overflow-y-hidden cursor-pointer">
-            <a data-index="1" class="block">About</a>
+            <span data-index="1" class="block">About</span>
           </li>
           <li class="overflow-y-hidden cursor-pointer">
-            <a data-index="2" class="block">Portfolio</a>
+            <span data-index="2" class="block">Portfolio</span>
           </li>
           <li class="overflow-y-hidden cursor-pointer">
-            <a data-index="3" class="block">Contact</a>
+            <span data-index="3" class="block">Contact</span>
           </li>
         </ul>
         <div
           id="m-nav-socials"
           class="border-t border-black flex justify-between items-center text-sm font-bold"
         >
-          <a class="flex items-center" href="/" data-hover="visit">
+          <a
+            class="flex items-center"
+            href="https://github.com/Blackarrow299"
+            data-hover="visit"
+          >
             Github
             <img
               src="/icons/github-black.svg"
@@ -83,49 +118,55 @@
               alt="github"
             />
           </a>
-          <a class="flex items-center" href="/" data-hover="visit">
+          <a
+            class="flex items-center"
+            href="https://www.linkedin.com/in/yassine-goumni-902080224/"
+            data-hover="visit"
+          >
             Linkedin
             <img
               src="/icons/arrow-tr-black.svg"
               class="ml-1 mb-1 w-4"
-              alt="arrow top right"
+              alt="arrow top right icon"
             />
           </a>
         </div>
       </nav>
       <nav
         id="nav"
-        class="hidden md:flex list-none z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-base space-x-14 font-thin font-neueMetanaNext"
+        class="z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-base font-thin font-neueMetanaNext"
       >
-        <li
-          data-index="0"
-          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
-        >
-          Home
-        </li>
-        <li
-          data-index="1"
-          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
-        >
-          About
-        </li>
-        <li
-          data-index="2"
-          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
-        >
-          Portfolio
-        </li>
-        <li
-          data-index="3"
-          class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden flex items-center"
-        >
-          Contact
-          <img
-            src="/icons/arrow-tr.svg"
-            class="ml-1 mb-1"
-            alt="arrow top right"
-          />
-        </li>
+        <ul class="space-x-14 list-none hidden md:flex">
+          <li
+            data-index="0"
+            class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
+          >
+            Home
+          </li>
+          <li
+            data-index="1"
+            class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
+          >
+            About
+          </li>
+          <li
+            data-index="2"
+            class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden"
+          >
+            Portfolio
+          </li>
+          <li
+            data-index="3"
+            class="mix-blend-overlay cursor-pointer tracking-widest overflow-y-hidden flex items-center"
+          >
+            Contact
+            <img
+              src="/icons/arrow-tr.svg"
+              class="ml-1 mb-1"
+              alt="arrow top right icon"
+            />
+          </li>
+        </ul>
       </nav>
       <nav
         class="flex md:hidden list-none z-[90] fixed top-0 py-5 right-5 text-white bg-blend-darken text-sm space-x-14 font-thin font-neueMetanaNext"
@@ -135,7 +176,11 @@
           class="mix-blend-overlay cursor-pointer tracking-widest flex items-center"
         >
           Menu
-          <img src="/icons/menu.svg" class="ml-1 mb-1" alt="arrow top right" />
+          <img
+            src="/icons/menu.svg"
+            class="ml-1 mb-1"
+            alt="arrow top right icon"
+          />
         </li>
       </nav>
       <section
@@ -174,7 +219,7 @@
         <img
           class="-z-[1] circlesSvg animate-spin-slow opacity-[0.05] w-[100vmax] -top-[25vmax]"
           src="/images/10.svg"
-          alt=""
+          alt="rotating circle"
         />
         <div
           class="bg w-full h-full absolute -z-[1] bg-gradient-to-t from-background from-1% to-transparent"
@@ -221,7 +266,7 @@
             data-hover="visit"
           >
             Github
-            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
+            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github icon" />
           </a>
           <a
             class="flex items-center"
@@ -233,7 +278,7 @@
             <img
               src="/icons/arrow-tr.svg"
               class="ml-1 mb-1"
-              alt="arrow top right"
+              alt="arrow top right icon"
             />
           </a>
         </div>
@@ -547,8 +592,7 @@
                 <div class="p-showcase-detail-tile relative">
                   <img
                     src="/images/portfolio/portfolio-1.png"
-                    alt=""
-                    srcset=""
+                    alt="arrow meeting showcase"
                     class="invisible"
                   />
                 </div>
@@ -600,14 +644,13 @@
             class="flex items-center text-lg cursor-pointer text-primary font-neueMetanaNext mt-16"
           >
             Say Hi
-            <img src="/icons/arrow-tr.svg" class="ml-1 mb-1" alt="github" />
+            <img src="/icons/arrow-tr.svg" class="ml-1 mb-1" alt="arrow icon" />
           </a>
         </div>
         <img
           class="absolute top-0 left-0 -z-10 opacity-10 h-full"
           src="/contactmetext.png"
-          alt=""
-          srcset=""
+          alt="contact me text"
         />
         <div
           class="md:flex z-10 items-center list-none tracking-widest text-white font-neueMetanaNext space-x-14 absolute bottom-2 right-4"
@@ -619,7 +662,7 @@
             data-hover="visit"
           >
             Github
-            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github" />
+            <img src="/icons/github.svg" class="ml-1 mb-1" alt="github icon" />
           </a>
           <a
             class="flex items-center"

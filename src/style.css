@@ -15,18 +15,14 @@
        url('./fonts/humane/Humane-Bold.woff2') format('woff2');
   font-weight: 100 200 300 400 500 600 700;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Flaviotte';
-  src: url('./fonts/flaviotte/Flaviotte.woff2');
-  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'NeueMetanaNext';
   src: url('./fonts/NeueMetanaNext/NeueMetanaNext-SemiBold.otf');
   font-style: normal;
+  font-display: swap;
 }
 
 @layer components {

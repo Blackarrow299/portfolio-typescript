@@ -10,9 +10,10 @@ export default class MobileNavigation {
             mNavOpen: document.querySelector<HTMLElement>('#m-nav-open'),
             mNavClose: document.querySelector<HTMLElement>('#m-nav-close'),
             mNavSocials: document.querySelector<HTMLElement>('#m-nav-socials'),
+            mNavSpan: document.querySelector<HTMLElement>('#m-nav ul li span')
         }
 
-        gsap.set("#m-nav ul li a", {
+        gsap.set(this.$el.mNavSpan, {
             y: 100,
         })
 
@@ -43,7 +44,7 @@ export default class MobileNavigation {
         gsap.to(this.$el.mNav, {
             opacity: 1,
         }).then(() => {
-            gsap.to("#m-nav ul li a", {
+            gsap.to(this.$el.mNavSpan, {
                 y: 0,
                 stagger: 0.1,
                 duration: 0.2
@@ -66,7 +67,7 @@ export default class MobileNavigation {
                 display: 'none'
             })
 
-            gsap.set("#m-nav ul li a", {
+            gsap.set(this.$el.mNavSpan, {
                 y: 100,
             })
 
