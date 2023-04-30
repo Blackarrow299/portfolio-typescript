@@ -3,7 +3,6 @@ import gsap from 'gsap'
 import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Cursor from '@/ts/Cursor'
-import Rellax from 'rellax'
 // import Fps from './modules/fps'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from '@/ts/Particles'
@@ -96,9 +95,6 @@ const cursor = new Cursor(mainScene.scene, mainScene.camera)
 new Navigation(cursor)
 const particles = new Particles(mainScene.scene);
 new Parallax('.parallax-element')
-
-new Rellax('.rellax', { speed: -2 });
-
 
 // render the scene
 function animate() {

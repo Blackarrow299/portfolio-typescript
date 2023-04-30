@@ -34,7 +34,6 @@
     "@types/splitting": "^1.0.1",
     "@types/three": "^0.149.0",
     "gsap": "^3.11.5",
-    "rellax": "^1.12.1",
     "splitting": "^1.0.6",
     "three": "^0.150.1"
   }
