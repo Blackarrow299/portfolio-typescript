@@ -86,6 +86,8 @@ const loadingInterval = setInterval(() => {
     }
 }, 100)
 
+
+
 new Scroll()
 new Skills()
 new MobileNavigation()
@@ -95,6 +97,16 @@ const cursor = new Cursor(mainScene.scene, mainScene.camera)
 new Navigation(cursor)
 const particles = new Particles(mainScene.scene);
 new Parallax('.parallax-element')
+
+gsap.to('#parallax', {
+    scrollTrigger: {
+        trigger: '#parallax',
+        start: 'top center',
+        scrub: true,
+    },
+    duration: 1,
+    y: '+=100',
+})
 
 // render the scene
 function animate() {
