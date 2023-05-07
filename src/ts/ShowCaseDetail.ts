@@ -142,6 +142,7 @@ export default class showCaseDetail {
             ease: 'Power4.inOut',
             onComplete: () => {
                 this.parent.$els.activeElem = this.$els.slider
+
             }
         })
 

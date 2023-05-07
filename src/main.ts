@@ -70,23 +70,20 @@ const loadingInterval = setInterval(() => {
 
             tl.call(() => {
                 header.in()
+
             }, [], '<+=0.2')
-
-            tl.set(preloader, {
-                display: 'none'
-            })
-
             gsap.set(app, {
                 overflow: 'initial',
                 height: 'auto'
+            })
+            tl.set(preloader, {
+                display: 'none'
             })
 
             ScrollTrigger.refresh()
         }, 500)
     }
 }, 100)
-
-
 
 new Scroll()
 new Skills()

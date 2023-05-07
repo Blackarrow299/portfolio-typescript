@@ -10,7 +10,7 @@ export default class MobileNavigation {
             mNavOpen: document.querySelector<HTMLElement>('#m-nav-open'),
             mNavClose: document.querySelector<HTMLElement>('#m-nav-close'),
             mNavSocials: document.querySelector<HTMLElement>('#m-nav-socials'),
-            mNavSpan: document.querySelector<HTMLElement>('#m-nav ul li span')
+            mNavSpan: document.querySelectorAll<HTMLElement>('#m-nav ul li span')
         }
 
         gsap.set(this.$el.mNavSpan, {
@@ -29,12 +29,12 @@ export default class MobileNavigation {
     }
 
     bindEvent() {
-        this.$el.mNavOpen?.addEventListener('click', this.onOpen.bind(this))
-        this.$el.mNavClose?.addEventListener('click', this.onClose.bind(this))
-        this.$el.mNav?.querySelector<HTMLElement>('ul')?.addEventListener('click', this.onLinkClick.bind(this))
+        this.$el.mNavOpen?.addEventListener('click', this.in.bind(this))
+        this.$el.mNavClose?.addEventListener('click', this.out.bind(this))
+        this.$el.mNav?.querySelector<HTMLElement>('ul')?.addEventListener('click', this.click.bind(this))
     }
 
-    onOpen() {
+    in() {
         event('Scroll:Lock')
 
         gsap.set(this.$el.mNav, {
@@ -57,7 +57,7 @@ export default class MobileNavigation {
         })
     }
 
-    onClose() {
+    out() {
         event('Scroll:Unlock')
 
         gsap.to(this.$el.mNav, {
@@ -81,12 +81,12 @@ export default class MobileNavigation {
         })
     }
 
-    onLinkClick(e: MouseEvent) {
+    click(e: MouseEvent) {
         let target = e.target as Element
         if (target.tagName === 'A') {
             const val = target?.getAttribute('data-index') || '0'
             if (isNaN(+val)) return
-            this.onClose()
+            this.out()
             gsap.to(window, { duration: 2, scrollTo: PAGE_SECTIONS[+target.getAttribute('data-index')!] });
         }
     }

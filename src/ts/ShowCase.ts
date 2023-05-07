@@ -200,6 +200,7 @@ export default class ShowCase {
         this.uniforms.u_time.value = clock.getElapsedTime()
         this.updateMeshScale()
         if (!this.isAnimating) {
+            //console.log('!animatin');
 
             const rect = this.$els.activeElem.getBoundingClientRect();
             const { left, right, top, bottom, width, height } = rect;

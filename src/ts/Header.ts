@@ -38,8 +38,9 @@ export default class Header {
         const h2Split = Splitting({ by: 'chars', target: this.$els.h2 })
 
         h1Split[0].chars = shuffleArray(h1Split[0].chars!)
+        h2Split[0].chars = shuffleArray(h2Split[0].chars!)
 
-        gsap.set(h1Split[0].chars, {
+        gsap.set([...h1Split[0].chars, ...h2Split[0].chars], {
             display: 'inline-block'
         })
 
@@ -51,9 +52,10 @@ export default class Header {
         })
 
         this.tl.from(h2Split[0].chars!, {
+            y: -50,
             opacity: 0,
             stagger: 0.1,
-            duration: 1.5
+            duration: 1
         }, '<')
 
         this.tl.from(this.$els.navEls, {
