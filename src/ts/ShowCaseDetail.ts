@@ -99,10 +99,6 @@ export default class showCaseDetail {
             stagger: 0.1,
             ease: 'Power4.out'
         }, '>-=0.2')
-
-        this.tl.then(() => {
-            this.parent.isAnimating = false
-        })
     }
 
     in() {
@@ -142,11 +138,12 @@ export default class showCaseDetail {
             ease: 'Power4.inOut',
             onComplete: () => {
                 this.parent.$els.activeElem = this.$els.slider
-
             }
         })
 
-        this.tl.timeScale(1).play()
+        this.tl.timeScale(1).play().then(() => {
+            this.parent.isAnimating = false
+        })
     }
 
     out() {
@@ -157,6 +154,7 @@ export default class showCaseDetail {
 
 
         this.tl.timeScale(2).reverse().then(() => {
+
             gsap.to(this.parent.rect, {
                 width,
                 height,
@@ -189,6 +187,7 @@ export default class showCaseDetail {
             gsap.set(this.renderer.domElement, {
                 zIndex: 1
             })
+
         })
     }
 }
