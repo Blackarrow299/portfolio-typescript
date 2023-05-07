@@ -20,14 +20,14 @@ export default class showCaseDetail {
             slider: $el.querySelector<HTMLElement>('.p-showcase-detail-tile')!,
             sliderNext: $el.querySelector<HTMLElement>('.p-showcase-detail-slider-next')!,
             sliderPrev: $el.querySelector<HTMLElement>('.p-showcase-detail-slider-prev')!,
-            back: $el.querySelector<HTMLElement>('.p-showcase-detail-back')!,
+            back: $el.querySelectorAll<HTMLElement>('.p-showcase-detail-back')!,
             bg: document.querySelector<HTMLElement>('#bg')!,
             tile: $el.parentNode?.querySelector<HTMLElement>('.p-showcase-tile')!,
-            backTextSvg: $el.querySelector<HTMLElement>('.p-showcase-detail-back-text')!,
-            backInner: $el.querySelector<HTMLElement>('.p-showcase-detail-back div')!,
+            backTextSvg: $el.querySelectorAll<HTMLElement>('.p-showcase-detail-back-text')!,
+            backInner: $el.querySelectorAll<HTMLElement>('.p-showcase-detail-back div')!,
         }
         this.tl = gsap.timeline({ paused: true })
-        this.$els.back.addEventListener('click', this.out.bind(this))
+        this.$els.back.forEach((e) => e.addEventListener('click', this.out.bind(this)))
         document.addEventListener('Navigation:Click', this.out.bind(this))
         this.init()
     }

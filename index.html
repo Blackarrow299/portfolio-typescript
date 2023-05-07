@@ -408,11 +408,41 @@
               </h2>
             </div>
             <div
-              class="p-showcase-detail hidden fixed inset-0 px-4 md:px-24 w-screen min-h-screen z-30 py-16 md:py-0 items-start md:items-center grid-rows-2 grid-cols-1 md:grid-cols-2 md:grid-rows-1 justify-center"
+              class="p-showcase-detail hidden fixed inset-0 px-4 md:px-24 w-screen min-h-screen z-30 py-16 md:py-0 items-start md:items-center grid-cols-1 md:grid-cols-2 md:grid-rows-1 justify-center"
             >
+              <div
+                class="md:hidden row-start-1 p-showcase-detail-back w-24 h-24 mb-2 group cursor-pointer relative z-10"
+              >
+                <div
+                  class="flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-14 h-14 bg-primary group-hover:bg-white"
+                >
+                  <svg
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    stroke-width="3"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="#ffffff"
+                    class="stroke-white group-hover:stroke-primary"
+                  >
+                    <path
+                      d="M21 12H3m0 0l8.5-8.5M3 12l8.5 8.5"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <img
+                  class="p-showcase-detail-back-text w-full h-full animate-spin-20 group-hover:animate-spin-3"
+                  src="/icons/back-text.svg"
+                  alt="back text svg"
+                />
+              </div>
               <div>
                 <div
-                  class="p-showcase-detail-back w-24 h-24 mb-8 group cursor-pointer relative z-10"
+                  class="hidden md:block p-showcase-detail-back w-24 h-24 mb-8 group cursor-pointer relative z-10"
                 >
                   <div
                     class="flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-14 h-14 bg-primary group-hover:bg-white"
@@ -447,7 +477,7 @@
                   <span class="inline-block">Personal project</span>
                 </h5>
                 <h2
-                  class="p-showcase-detail-title font-humane tracking-wider text-5xl md:text-8xl font-bold overflow-y-hidden"
+                  class="p-showcase-detail-title font-humane tracking-wider text-8xl font-bold overflow-y-hidden"
                 >
                   <span class="text-primary inline-block">01.</span>
                   <span class="inline-block">ARROW MEETING</span>
@@ -507,7 +537,7 @@
                   />
                 </a>
               </div>
-              <div class="w-full row-start-1 md:row-start-auto">
+              <div class="w-full row-start-2 md:row-start-auto">
                 <div class="p-showcase-detail-tile relative">
                   <img
                     src="/images/portfolio/portfolio-1.png"
