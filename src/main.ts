@@ -1,10 +1,10 @@
-import * as THREE from 'three'
+import { LoadingManager, TextureLoader } from 'three'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import gsap from 'gsap'
 import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Cursor from '@/ts/Cursor'
 // import Fps from './modules/fps'
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Particles from '@/ts/Particles'
 import IsMobileDevice from './ts/IsMobileDevice'
 import MobileNavigation from './ts/MobileNav'
@@ -24,9 +24,9 @@ new IsMobileDevice()
 
 const preloader = document.querySelector('#preloader')
 
-const loadingManager = new THREE.LoadingManager()
+const loadingManager = new LoadingManager()
 const fbxLoader = new FBXLoader(loadingManager)
-const textureLoader = new THREE.TextureLoader(loadingManager);
+const textureLoader = new TextureLoader(loadingManager);
 window.textureLoader = textureLoader
 
 let windowLoaded = false
@@ -40,6 +40,7 @@ loadingManager.onLoad = function () {
     threeLoaded = true
 }
 
+new Scroll()
 const header = new Header()
 
 const loadingInterval = setInterval(() => {
@@ -70,8 +71,8 @@ const loadingInterval = setInterval(() => {
 
             tl.call(() => {
                 header.in()
-
             }, [], '<+=0.2')
+
             gsap.set(app, {
                 overflow: 'initial',
                 height: 'auto'
@@ -80,12 +81,12 @@ const loadingInterval = setInterval(() => {
                 display: 'none'
             })
 
+
             ScrollTrigger.refresh()
         }, 500)
     }
 }, 100)
 
-new Scroll()
 new Skills()
 new MobileNavigation()
 const mainScene = new MainScene(fbxLoader)

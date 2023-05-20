@@ -7,8 +7,6 @@ export default class Split {
         this.chars = []
 
         this.init()
-
-        console.log(this.chars);
     }
 
     init() {
