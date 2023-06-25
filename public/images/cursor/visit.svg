@@ -6,10 +6,11 @@
    fill="none"
    version="1.1"
    id="svg10"
-   sodipodi:docname="hi.svg"
+   sodipodi:docname="visit.svg"
    inkscape:export-filename="visit.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +26,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     showgrid="false" />
+     showgrid="false"
+     inkscape:zoom="7.82"
+     inkscape:cx="50"
+     inkscape:cy="50"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
   <circle
      cx="50"
      cy="50"
@@ -44,15 +54,29 @@
      r="35"
      fill="#e5e5e5"
      id="circle6" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Grand Hotel';-inkscape-font-specification:'Grand Hotel, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:3.47px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
-     x="28.880003"
-     y="64"
-     id="text906"><tspan
-       sodipodi:role="line"
-       id="tspan904"
-       x="28.880003"
-       y="64"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Humane;-inkscape-font-specification:Humane">VISIT</tspan></text>
+  <g
+     aria-label="VISIT"
+     id="text906"
+     style="font-size:40px;line-height:1.25;font-family:'Grand Hotel';-inkscape-font-specification:'Grand Hotel, Normal';letter-spacing:3.47px;word-spacing:0px;fill:#000000">
+    <path
+       d="m 34.160003,64 h -3.2 l -2.08,-28 h 2.52 l 0.92,17.56 0.2,6.88 h 0.08 l 0.2,-6.88 0.92,-17.56 h 2.24 z"
+       style="font-family:Humane;-inkscape-font-specification:Humane"
+       id="path168" />
+    <path
+       d="m 42.430005,64 h -2.4 V 36 h 2.4 z"
+       style="font-family:Humane;-inkscape-font-specification:Humane"
+       id="path170" />
+    <path
+       d="m 53.420011,61.04 q 0,1.48 -0.88,2.36 -0.88,0.84 -2.36,0.84 -1.48,0 -2.32,-0.84 -0.84,-0.88 -0.84,-2.36 v -6.88 h 2.4 v 6.56 q 0,1.28 0.8,1.28 0.8,0 0.8,-1.28 V 55.4 q 0,-1.76 -0.6,-3 -0.56,-1.28 -1.28,-2.52 -0.8,-1.32 -1.48,-2.84 -0.64,-1.52 -0.64,-3.72 v -4.36 q 0,-1.48 0.88,-2.32 0.88,-0.88 2.36,-0.88 1.48,0 2.32,0.88 0.84,0.84 0.84,2.32 v 5.64 h -2.4 v -5.32 q 0,-1.28 -0.8,-1.28 -0.8,0 -0.8,1.28 v 4.04 q 0,1.76 0.56,3.04 0.6,1.28 1.32,2.52 0.8,1.32 1.44,2.84 0.68,1.52 0.68,3.68 z"
+       style="font-family:Humane;-inkscape-font-specification:Humane"
+       id="path172" />
+    <path
+       d="m 60.369989,64 h -2.4 V 36 h 2.4 z"
+       style="font-family:Humane;-inkscape-font-specification:Humane"
+       id="path174" />
+    <path
+       d="m 71.119997,38.24 h -2 V 64 h -2.4 V 38.24 h -2 V 36 h 6.4 z"
+       style="font-family:Humane;-inkscape-font-specification:Humane"
+       id="path176" />
+  </g>
 </svg>

@@ -6,10 +6,10 @@ export const PAGE_SECTIONS = [
 ]
 
 export const PAGE_SECTIONS_IMAGES = [
-    "/images/navigation/hero-s.png",
-    "/images/navigation/about-s.png",
-    "/images/navigation/portfolio-s.png",
-    "/images/navigation/contact-s.png",
+    "/images/navigation/hero-s.PNG",
+    "/images/navigation/about-s.PNG",
+    "/images/navigation/portfolio-s.PNG",
+    "/images/navigation/contact-s.PNG",
 ]
 
 export const CURSOR_TEXTURES_URL = {

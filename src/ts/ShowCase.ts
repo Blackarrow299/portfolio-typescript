@@ -1,4 +1,3 @@
-import { PORTFOLIO_IMAGES } from "@/utils/constants"
 import { getViewSize } from "@/utils/utils"
 import { Clock, Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, Vector2 } from "three"
 import PortfolioScene from "./PortfolioScene"
@@ -37,13 +36,14 @@ export default class ShowCase {
             gridTileElem: $el.querySelector<HTMLElement>('.p-showcase-tile')!,
             detailElem: $el.querySelector<HTMLElement>('.p-showcase-detail')!,
             detailTileElem: $el.querySelector<HTMLElement>('.p-showcase-detail-tile')!,
-            activeElem: $el.querySelector<HTMLElement>('.p-showcase-tile')!
+            activeElem: $el.querySelector<HTMLElement>('.p-showcase-tile')!,
+            images: $el.querySelectorAll<HTMLImageElement>('.p-showcase-tile .p-showcase-slide'),
         }
 
         this.uOffset = parent.uOffset
         this.parent = parent
-
-        this.textures = PORTFOLIO_IMAGES[index].map((url) => window.textureLoader.load(url))
+        //this.textures = PORTFOLIO_IMAGES[index].map((url) => window.textureLoader.load(url))
+        this.textures = Array.from(this.$els.images).map((e) => window.textureLoader.load(new URL(e.src).pathname));
 
         this.uniforms = {
             u_image: { value: this.textures[0] },

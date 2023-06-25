@@ -1,0 +1,33 @@
+<section
+id="skills"
+class="relative z-10 w-full py-64 flex flex-wrap px-8 md:px-0"
+>
+<h2
+  data-title
+  class="md:ml-[15%] text-9xl lg:text-[15rem] font-humane font-bold leading-[0.8]"
+>
+  SKI<span class="text-primary">LL</span>S <br />
+</h2>
+<div class="w-96 sm:ml-auto md:mr-[7%] font-neueMetanaNext">
+  <h4 class="text-primary">Full stack development</h4>
+  <div class="space-x-2 space-y-2 text-sm">
+    <% skills.full_stack.forEach((skill) => { %>
+    <div
+      class="skill inline-block py-1.5 px-4 border border-white rounded-2xl"
+    >
+      <%= skill %>
+    </div>
+    <% }) %>
+  </div>
+  <h4 class="text-primary mt-8">Web design</h4>
+  <div class="space-x-2 space-y-2 text-sm">
+    <% skills.web_design.forEach((skill) => { %>
+      <div
+        class="skill inline-block py-1.5 px-4 border border-white rounded-2xl"
+      >
+        <%= skill %>
+      </div>
+      <% }) %>
+  </div>
+</div>
+</section>
