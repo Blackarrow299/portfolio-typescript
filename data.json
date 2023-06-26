@@ -1,44 +1,79 @@
 {
-    "meta" : {
-        "title" : "Yassine Goumni 👨‍💻",
-        "description": "Yassine goumni. Full stack developer, Web designer, UI/UX.",
-        "keywords": "full-stack development, web development, JavaScript,Typescript, NextJs, HTML, CSS, React,  Node.js, Express.js, MongoDB, SQL, REST APIs, MVC architecture, Git, responsive design, cross-browser compatibility, UX/UI design, testing, debugging, deployment, hosting, performance optimization, security best practices"
+  "meta": {
+    "title": "Yassine Goumni 👨‍💻",
+    "description": "Yassine goumni. Full stack developer, Web designer, UI/UX.",
+    "keywords": "full-stack development, web development, JavaScript,Typescript, NextJs, HTML, CSS, React,  Node.js, Express.js, MongoDB, SQL, REST APIs, MVC architecture, Git, responsive design, cross-browser compatibility, UX/UI design, testing, debugging, deployment, hosting, performance optimization, security best practices"
+  },
+  "about": "My name is yassine goumni ,im full stack developer who loves what he does, motivation has never been a problem always trying to learn andmake new things, I learned to code from an early age in variousprogramming languages ,I realized many projects that makes me fast andeffective in learning and resolving problems",
+  "skills": {
+    "full_stack": [
+      "NextJs",
+      "Typescript",
+      "ReactJs",
+      "TailwindCSS",
+      "NodeJs",
+      "Laravel"
+    ],
+    "web_design": ["Figma", "UX/UI", "Typography"]
+  },
+  "showcases": [
+    {
+      "index": "01",
+      "title": "ARROW MEETING",
+      "type": "Personal project",
+      "skills": [
+        "ReactJS",
+        "SocketIO",
+        "nodeJS",
+        "PeerJS",
+        "typescript",
+        "WebRTC"
+      ],
+      "extended_skills": [
+        "ReactJS",
+        "SocketIO",
+        "nodeJS",
+        "PeerJS",
+        "typescript",
+        "TailwindCSS",
+        "html",
+        "css",
+        "WebRTC"
+      ],
+      "description": ["App for Video/Audio Calls, Screen", "Sharing, and Chat"],
+      "slider": [
+        { "src": "/images/portfolio/1/1.png", "alt": "" },
+        { "src": "/images/portfolio/1/2.png", "alt": "" }
+      ],
+      "image": "/images/portfolio/1/1.png",
+      "image_alt": "arrow meeting showcase",
+      "visit": "/"
     },
-    "about": "My name is yassine goumni ,im full stack developer who loves what he does, motivation has never been a problem always trying to learn andmake new things, I learned to code from an early age in variousprogramming languages ,I realized many projects that makes me fast andeffective in learning and resolving problems",
-    "skills": {
-        "full_stack": ["NextJs", "Typescript", "ReactJs", "TailwindCSS", "NodeJs", "Laravel"],
-        "web_design": ["Figma", "UX/UI", "Typography"]
-    },
-    "showcases" : [
-        {
-            "index": "01",
-            "title": "ARROW MEETING",
-            "type": "Personal project",
-            "skills" : ["typescript", "html" , "css"],
-            "extended_skills" : ["typescript", "html" , "css"],
-            "description" : ["App for Video/Audio Calls, Screen", "Sharing, and Chat"],
-            "slider": [
-                {"src": "/images/portfolio/portfolio-1.png", "alt": ""},
-                {"src":"/images/portfolio/portfolio-2.png", "alt": ""}
-            ],
-            "image": "/images/portfolio/portfolio-1.png",
-            "image_alt" : "arrow meeting showcase",
-            "visit": "/"
-        },
-        {
-            "index": "02",
-            "title": "ARROW MEETING",
-            "type": "Personal project",
-            "skills" : ["typescript", "html" , "css"],
-            "extended_skills" : ["typescript", "html" , "css"],
-            "description" : ["App for Video/Audio Calls, Screen", "Sharing, and Chat"],
-            "slider": [
-                {"src": "/images/portfolio/portfolio-1.png", "alt": ""},
-                {"src":"/images/portfolio/portfolio-2.png", "alt": ""}
-            ],
-            "image": "/images/portfolio/portfolio-1.png",
-            "image_alt" : "arrow meeting showcase",
-            "visit": "/"
-        }
-    ]
+    {
+      "index": "02",
+      "title": "LINKT BLOG",
+      "type": "Personal project",
+      "skills": ["NextJS", "typescript", "GraphQL", "TailwindCSS", "NodeJS"],
+      "extended_skills": [
+        "NextJS",
+        "typescript",
+        "GraphQL",
+        "TailwindCSS",
+        "NodeJS"
+      ],
+      "description": [
+        "user friendly blog where you can post articles on various",
+        "topics, its easy to navigate, and you can follow others who share same interests."
+      ],
+      "slider": [
+        { "src": "/images/portfolio/2/1.png", "alt": "" },
+        { "src": "/images/portfolio/2/2.png", "alt": "" },
+        { "src": "/images/portfolio/2/3.png", "alt": "" },
+        { "src": "/images/portfolio/2/4.png", "alt": "" }
+      ],
+      "image": "/images/portfolio/2/1.png",
+      "image_alt": "arrow meeting showcase",
+      "visit": "/"
+    }
+  ]
 }
