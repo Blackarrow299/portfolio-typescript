@@ -46,20 +46,21 @@
         { "src": "/images/portfolio/1/2.png", "alt": "" }
       ],
       "image": "/images/portfolio/1/1.png",
-      "image_alt": "arrow meeting showcase",
-      "visit": "/"
+      "image_alt": "arrow meeting showcase"
     },
     {
       "index": "02",
       "title": "LINKT BLOG",
       "type": "Personal project",
-      "skills": ["NextJS", "typescript", "GraphQL", "TailwindCSS", "NodeJS"],
+      "skills": ["NextJS", "ReactJS","PrismaJS","typescript", "GraphQL", "TailwindCSS", "NodeJS"],
       "extended_skills": [
         "NextJS",
         "typescript",
         "GraphQL",
         "TailwindCSS",
-        "NodeJS"
+        "NodeJS",
+        "PrismaJS",
+        "Postgresql"
       ],
       "description": [
         "user friendly blog where you can post articles on various",
@@ -72,8 +73,37 @@
         { "src": "/images/portfolio/2/4.png", "alt": "" }
       ],
       "image": "/images/portfolio/2/1.png",
-      "image_alt": "arrow meeting showcase",
-      "visit": "/"
+      "image_alt": "linkt blog showcase",
+      "visit": "https://link-team.vercel.app/"
+    },
+    {
+      "index": "03",
+      "title": "FLASHQUIZ",
+      "type": "Personal project",
+      "skills": ["NextJS", "ReactJS","PrismaJS","typescript", "GraphQL", "TailwindCSS", "NodeJS"],
+      "extended_skills": [
+        "NextJS",
+        "typescript",
+        "TailwindCSS",
+        "NodeJS",
+        "PrismaJS",
+        "ReactJS",
+        "CockroachDB"
+      ],
+      "description": [
+        "Webapp That Makes You Create",
+        "And Explore Interactive Quizzes And Flashcards"
+      ],
+      "slider": [
+        { "src": "/images/portfolio/3/1.png", "alt": "" },
+        { "src": "/images/portfolio/3/2.png", "alt": "" },
+        { "src": "/images/portfolio/3/3.png", "alt": "" },
+        { "src": "/images/portfolio/3/4.png", "alt": "" },
+        { "src": "/images/portfolio/3/5.png", "alt": "" }
+      ],
+      "image": "/images/portfolio/3/1.png",
+      "image_alt": "FLASHQUIZE showcase",
+      "visit": "https://flashcards-blackarrow299.vercel.app/"
     }
   ]
 }
