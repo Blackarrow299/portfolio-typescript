@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && ejs ./src/template/template.ejs -f ./data.json -o index.html",
     "preview": "vite preview",
     "lint": "eslint --fix src/*",
     "format": "prettier -w ."

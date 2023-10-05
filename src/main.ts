@@ -96,7 +96,7 @@ new Navigation(cursor)
 const particles = new Particles(mainScene.scene);
 new Parallax('.parallax-element')
 
-gsap.to('#parallax', {
+gsap.to('.parallax', {
     scrollTrigger: {
         trigger: '#parallax',
         start: 'top center',
